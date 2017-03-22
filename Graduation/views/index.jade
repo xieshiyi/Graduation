@@ -1,0 +1,91 @@
+extends layout
+
+block content
+
+  nav(class="navbar navbar-inverse navbar-fixed-top")
+     .container-fluid
+      .navbar-header 
+        button(
+          type="button" 
+          class="navbar-toggle collapsed" 
+          data-toggle="collapse" 
+          data-target="#navbar" 
+          aria-expanded="false" 
+          aria-controls="navbar"
+        )
+          span(class="sr-only") Toggle navigation       
+          span(class="icon-bar")
+          span(class="icon-bar")
+          span(class="icon-bar")
+        a(class="navbar-brand" href="#") 物位计监控系统
+      div(id='navbar' class='navbar-collapse collapse') 
+        ul(class="nav navbar-nav navbar-right") 
+          li
+            a(href="#") 帮助
+
+  .container-fluid
+    .row
+      div(class='col-sm-3 col-md-2 sidebar')
+        .fan
+          ul(class='nav nav-sidebar')
+            li(class='nav_title one active')
+              a(href='#') 物位计
+                span(class='sr-only') (current)
+            li(class="nav_title two")
+              a(href="#") 折线图 
+            li(class="nav_title three")
+              a(href="#") 柱状图
+            li(class="nav_title four")
+              a(href="#") 雷达图
+            li(class="nav_title five")
+              a(href="#") 仪表盘
+              
+      //版块一
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne")
+        h1(class="page-header") 物位计
+        div(class='row placeholders')
+          div(class='col-xs-6 col-sm-3 placeholder')
+            img(src="/images/1.png" width="200" height="200" class="img-responsive imgOne" alt="Generic placeholder thumbnail")
+          div(class='col-xs-6 col-sm-3 placeholder')
+            img(src="/images/2.png" width="200" height="200" class="img-responsive imgTwo" alt="Generic placeholder thumbnail")
+          div(class='col-xs-6 col-sm-3 placeholder')
+            img(src="/images/3.png" width="200" height="200" class="img-responsive imgThree" alt="Generic placeholder thumbnail")
+          div(class='col-xs-6 col-sm-3 placeholder')
+            img(src="/images/4.png" width="200" height="200" class="img-responsive imgFour" alt="Generic placeholder thumbnail")
+        h2(class='sub-header') 报警提示邮箱 
+        br
+        h2(class="text-muted" style="float: left;") 邮箱账号：
+        input(type="text" class="form-control email" placeholder="请输入正确邮箱格式")
+        button(type="submit" class="btn btn-primary" style='margin-left:4px;') 确定
+      //版块二
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo")
+        h1(class="page-header") 折线图监控
+        .table-responsive
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
+          .handler
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='line-chart')
+
+      //版块三
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree")
+        h1(class="page-header") 柱状图监控
+        .table-responsive
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
+          .handler
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart')
+
+      //版块四
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFour")
+        h1(class="page-header") 雷达图监控
+        .table-responsive
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
+          .handler
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='radar-chart')
+       
+      //版块五
+      div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFive")
+        h1(class="page-header") 仪表盘监控
+        .table-responsive
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
+          .handler
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board')
+
