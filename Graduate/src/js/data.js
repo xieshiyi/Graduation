@@ -31,6 +31,19 @@ $(function(){
         $('.main').css('display','none');
         $('.pageFive').css('display','block');
     });
+     //筛选页面点击切换
+        $('.time_data').bind('click',function(event){
+        $('.nav_tabs_title').removeClass('active');
+        $('.time_data').addClass('active');
+        $('.alarm_data_page').css('display','none');
+        $('.time_data_page').css('display','block');
+    });
+        $('.alarm_data').bind('click',function(event){
+        $('.nav_tabs_title').removeClass('active');
+        $('.alarm_data').addClass('active');
+        $('.time_data_page').css('display','none');
+        $('.alarm_data_page').css('display','block');
+    });
      // 基于准备好的dom，初始化echarts实例
         var lineChart = echarts.init(document.getElementById('line-chart'));
         var barChart = echarts.init(document.getElementById('bar-chart'));

@@ -6,12 +6,7 @@ block content
      .container-fluid
       .navbar-header 
         button(
-          type="button" 
-          class="navbar-toggle collapsed" 
-          data-toggle="collapse" 
-          data-target="#navbar" 
-          aria-expanded="false" 
-          aria-controls="navbar"
+          class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"
         )
           span(class="sr-only") Toggle navigation       
           span(class="icon-bar")
@@ -32,13 +27,13 @@ block content
               a(href='#') 物位计
                 span(class='sr-only') (current)
             li(class="nav_title two")
-              a(href="#") 折线图 
+              a(href="#") 超声波
             li(class="nav_title three")
-              a(href="#") 柱状图
+              a(href="#") 电容式
             li(class="nav_title four")
-              a(href="#") 雷达图
+              a(href="#") 微波雷达
             li(class="nav_title five")
-              a(href="#") 仪表盘
+              a(href="#") 静压式
               
       //版块一
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne")
@@ -59,33 +54,139 @@ block content
         button(type="submit" class="btn btn-primary" style='margin-left:4px;') 确定
       //版块二
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo")
-        h1(class="page-header") 折线图监控
+        h1(class="page-header") 超声波物位计
         .table-responsive
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
-          .handler
+            ul(class="nav nav-tabs" role="tablist")
+                li(role="presentation" class="nav_tabs_titleOne time_dataOne active")
+                  a(href="#") 时间段监控 
+                li(role="presentation" class='nav_tabs_titleOne alarm_dataOne')
+                  a(href="#") 报警详情
+            div(class='time_data_page time_data_pageOne')           
+              mixin choose 
+                ul(class="navbar-nav time_choose")
+                  li(class="dropdown")
+                    a(href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false") 3个小时内
+                      span(class="caret")
+                    ul(class="dropdown-menu")
+                      li
+                        a(href='#' class='dropdown-menu-one') 12个小时内
+                      li
+                        a(href='#' class='dropdown-menu-two') 一天内
+              +choose
+              div(class='placeholder chart-data' id='data-line-chart')
+            div(class='alarm_data_page alarm_data_pageOne')
+              .placeholder
+                +choose
+                table(class="table table-striped")
+                  thead
+                    tr
+                      th 
+                      th 日期
+                      th 时间
+                      th 高度                                    
+                  tbody
+                    tr
+                      td -
+                      td -
+                      td -
+                      td -                  
+          
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='line-chart')
 
       //版块三
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree")
-        h1(class="page-header") 柱状图监控
+        h1(class="page-header") 电容式物位计
         .table-responsive
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
-          .handler
+            ul(class="nav nav-tabs" role="tablist")
+                li(role="presentation" class="nav_tabs_titleTwo time_dataTwo active")
+                  a(href="#")时间段监控 
+                li(role="presentation" class='nav_tabs_titleTwo alarm_dataTwo')
+                  a(href="#")报警详情
+            div(class='time_data_page time_data_pageTwo')
+              +choose
+              div(class='placeholder chart-data' id='data-bar-chart')
+            div(class='alarm_data_page alarm_data_pageTwo')
+              .placeholder
+                +choose
+                table(class="table table-striped")
+                  thead
+                    tr
+                      th 
+                      th 日期
+                      th 时间
+                      th 高度                                    
+                  tbody
+                    tr
+                      td -
+                      td -
+                      td -
+                      td -
+         
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart')
 
       //版块四
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFour")
-        h1(class="page-header") 雷达图监控
+        h1(class="page-header") 微波雷达物位计
         .table-responsive
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
-          .handler
+            ul(class="nav nav-tabs" role="tablist")
+                li(role="presentation" class="nav_tabs_titleThree time_dataThree active")
+                  a(href="#")时间段监控 
+                li(role="presentation" class='nav_tabs_titleThree alarm_dataThree')
+                  a(href="#")报警详情
+            div(class='time_data_page time_data_pageThree')
+              +choose
+              div(class='placeholder chart-data' id='data-radar-chart')
+            div(class='alarm_data_page alarm_data_pageThree')
+              .placeholder
+                +choose
+                table(class="table table-striped")
+                  thead
+                    tr
+                      th 
+                      th 日期
+                      th 时间
+                      th 高度                                    
+                  tbody
+                    tr
+                      td -
+                      td -
+                      td -
+                      td -
+          
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='radar-chart')
        
       //版块五
       div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFive")
-        h1(class="page-header") 仪表盘监控
+        h1(class="page-header") 静压式液位计
         .table-responsive
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
-          .handler
+            ul(class="nav nav-tabs" role="tablist")
+                li(role="presentation" class="nav_tabs_titleFour time_dataFour active")
+                  a(href="#")时间段监控 
+                li(role="presentation" class='nav_tabs_titleFour alarm_dataFour')
+                  a(href="#")报警详情
+            div(class='time_data_page time_data_pageFour')
+              +choose
+              div(class='placeholder chart-data' id='data-dash-board')
+            div(class='alarm_data_page alarm_data_pageFour')
+              .placeholder
+                +choose
+                table(class="table table-striped")
+                  thead
+                    tr
+                      th 
+                      th 日期
+                      th 时间
+                      th 高度                                    
+                  tbody
+                    tr
+                      td -
+                      td -
+                      td -
+                      td -
+          
           div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board')
 
