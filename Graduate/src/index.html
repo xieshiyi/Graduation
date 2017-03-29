@@ -14,7 +14,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
      
     <!-- Custom styles for this template -->
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- 引入 echarts.js -->
     <script src="js/echarts.js"></script>
@@ -50,10 +50,10 @@
           <div class="fan">
             <ul class="nav nav-sidebar">
               <li class="nav_title one active"><a href="#">物位计 <span class="sr-only">(current)</span></a></li>
-              <li class="nav_title two"><a href="#">折线图</a></li>
-              <li class="nav_title three"><a href="#">柱状图</a></li>
-              <li class="nav_title four"><a href="#">雷达图</a></li>
-              <li class="nav_title five"><a href="#">仪表盘</a></li>
+              <li class="nav_title two"><a href="#">超声波</a></li>
+              <li class="nav_title three"><a href="#">电容式</a></li>
+              <li class="nav_title four"><a href="#">微波雷达</a></li>
+              <li class="nav_title five"><a href="#">静压式</a></li>
             </ul>
           </div>
         </div>
@@ -93,112 +93,131 @@
         </div>
         <!--版块二-->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo">
-          <h1 class="page-header">折线图监控</h1>
+          <h1 class="page-header">超声波物位计</h1>
           <div class="table-responsive">
             <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_title time_data active"><a href="#">Home</a></li>
-                <li role="presentation" class="nav_tabs_title alarm_data"><a href="#">Profile</a></li>
+                <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
+                <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
               </ul>
-              <div class="time_data_page">
+              <div class="time_data_page time_data_pageOne">
                 <ul class=" navbar-nav time_choose">
-                   
                   <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#">Action</a></li>
-                      <li><a href="#">Another action</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li class="dropdown-header">Nav header</li>
-                      <li><a href="#">Separated link</a></li>
-                      <li><a href="#">One more separated link</a></li>
+                      <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
                     </ul>
                   </li>
                 </ul>
-                  <div  class="placeholder chart-data" id='time_data_pageOne'></div>
+                  <div  class="placeholder chart-data" id='data-line-chart'></div>
               </div>
-              <div class="alarm_data_page">
-                <table class="placeholder table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="alarm_data_page alarm_data_pageOne">
+                <div class="placeholder">
+                  <ul class=" navbar-nav time_choose">
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                        <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>高度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            <div  class="handler" ></div>
             <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
             
           </div>
         </div>
+        div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree")
+        h1(class="page-header") 电容式物位计
+        .table-responsive
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='')
+            ul(class="nav nav-tabs" role="tablist")
+                li(role="presentation" class="nav_tabs_titleTwo time_dataTwo active")
+                  a(href="#")时间段监控 
+                li(role="presentation" class='nav_tabs_titleTwo alarm_dataTwo')
+                  a(href="#")报警详情
+            div(class='time_data_page time_data_pageTwo')
+              +choose
+              div(class='placeholder chart-data' id='data-bar-chart')
+            div(class='alarm_data_page alarm_data_pageTwo')
+              .placeholder
+                +choose
+                table(class="table table-striped")
+                  thead
+                    tr
+                      th 
+                      th 日期
+                      th 时间
+                      th 高度                                    
+                  tbody
+                    tr
+                      td -
+                      td -
+                      td -
+                      td -
+         
+          div(class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart')
         <!--版块三-->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree">
           <h1 class="page-header">柱状图监控</h1>
           <div class="table-responsive">
             <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_title time_data active"><a href="#">Home</a></li>
-                <li role="presentation" class="nav_tabs_title alarm_data"><a href="#">Profile</a></li>
+                <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
+                <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
               </ul>
-              <div class="time_data_page">
-                  <div  class="placeholder chart-data" id='time_data_pageTwo'></div>
+              <div class='time_data_page time_data_pageTwo'>
+                <ul class=" navbar-nav time_choose">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <div  class="placeholder chart-data" id='data-bar-chart'></div>
               </div>
               <div class="alarm_data_page">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
+                 <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>高度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
               </div>
             </div>
             <div  class="handler" ></div>
@@ -220,36 +239,24 @@
                   <div  class="placeholder chart-data" id='time_data_pageThree'></div>
               </div>
               <div class="alarm_data_page">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
+                 <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>高度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
               </div>
             </div>
             <div  class="handler" ></div>
@@ -271,36 +278,24 @@
                   <div  class="placeholder chart-data" id='time_data_pageFour'></div>
               </div>
               <div class="alarm_data_page">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
+                 <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>高度</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                      </tr>
+                    </tbody>
+                  </table>
               </div>
             </div>
             <div  class="handler" ></div>

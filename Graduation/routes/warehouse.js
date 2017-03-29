@@ -10,7 +10,7 @@ var connection = mysql.createConnection({
 });
 var infoAll,infoSelect;
 connection.connect();
-connection.query('SELECT * from user_info', function(err, rows, fields) {
+connection.query('SELECT * from warehouse_info', function(err, rows, fields) {
   if (err) throw err;
   infoAll=rows
 });
@@ -21,4 +21,3 @@ router.get('/', function(req, res, next) {
 });
 connection.end();
 module.exports = router;
- 
