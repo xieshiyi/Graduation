@@ -14,7 +14,7 @@
     "influx-express": "^0.1.1",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
-    "mysql": "",
+    "mysql": "latest",
     "serve-favicon": "~2.3.2"
   }
 }

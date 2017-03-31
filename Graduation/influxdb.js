@@ -1,5 +1,5 @@
 const Influx = require('influx');
-
+var randomNumber=Math.ceil(Math.random()*4);
 const influx = new Influx.InfluxDB({
  host: 'localhost',
  database: 'graduation',
@@ -18,8 +18,8 @@ const influx = new Influx.InfluxDB({
 influx.writePoints([
   {
     measurement: 'monitor',
-    tags: { number: 2  },
-    fields: { height:998 },
+    tags: { number: randomNumber  },
+    fields: { height:Math.random() },
   }
 ]).then(() => {
    return influx.query(`
