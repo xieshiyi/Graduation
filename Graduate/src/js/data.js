@@ -78,11 +78,44 @@ $(function () {
     var dataDashBoard = echarts.init(document.getElementById('data-dash-board'));
 
 
+    var socket = io('http://monitor.io:8080/');
+    socket.on('monitor', function (obj) {
+        if (obj.number == '1') {
+            $.get('/api/monitor/num1', function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    data.shift();
+                    data.push(randomData(responseTxt));
+                    lineChart.setOption({
+                        series: [{
+                            data: data
+                        }]
+                    });
+                    console.log(data[8]+'---'+new Date(responseTxt[0].time)+'---'+responseTxt[0].height);
+                }
+                if (statusTxt == "error")
+                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+            });
+        }
+        console.log('client-msg:' + obj.number);
+    });
+
+
     // 指定图表的配置项和数据
     /**
      * 折线图
      */
-    function randomData() {
+    function randomData(response) {
+        now = new Date(response[0].time);
+        value = response[0].height;
+        return {
+            name: now.toString(),
+            value: [
+                [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
+                value
+            ]
+        }
+    }
+    function setData() {
         now = new Date(+now + oneDay);
         value = value + Math.random() * 21 - 10;
         return {
@@ -95,17 +128,17 @@ $(function () {
     }
 
     var data = [];
-    var now = +new Date(1997, 9, 3);
+    var now = +new Date();
     var oneDay = 24 * 3600 * 1000;
     var value = Math.random() * 1000;
-    for (var i = 0; i < 1000; i++) {
-        data.push(randomData());
+    for (var i = 0; i < 10; i++) {
+        data.push(setData());
     }
 
     option = {
         title: {
             text: '超声波物位计',
-            subtext:''
+            subtext: ''
         },
         tooltip: {
             trigger: 'axis',
@@ -131,6 +164,7 @@ $(function () {
             splitLine: {
                 show: false
             }
+
         },
         yAxis: {
             type: 'value',
@@ -148,19 +182,19 @@ $(function () {
         }]
     };
 
-    setInterval(function () {
+    // setInterval(function () {
 
-        for (var i = 0; i < 5; i++) {
-            data.shift();
-            data.push(randomData());
-        }
+    //     for (var i = 0; i < 5; i++) {
+    //         data.shift();
+    //         data.push(randomData());
+    //     }
 
-        lineChart.setOption({
-            series: [{
-                data: data
-            }]
-        });
-    }, 1000);
+    //     lineChart.setOption({
+    //         series: [{
+    //             data: data
+    //         }]
+    //     });
+    // }, 1000);
 
     /**
      * 柱状图
