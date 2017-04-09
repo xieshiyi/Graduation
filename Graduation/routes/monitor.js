@@ -59,12 +59,13 @@ router.get('/insert', function (req, res, next) {
 router.get('/repo', function (req, res, next) {
   var param = req.query || req.params;
   console.log(param);
+  
   return influx.query(` 
-  select * from monitor where number =  ${param.repo} order by time desc limit ${parseInt(param.number)}
+  select * from monitor where number = '${param.repo}' order by time desc limit ${parseInt(param.number)}
   `).then(rows => res.json(rows));
 });
 
 http.listen(8080, function () {
-  console.log('listening on *:8080');
+  console.log('socket.io listening on *:8080');
 });
 module.exports = router;

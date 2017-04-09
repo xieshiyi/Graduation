@@ -98,18 +98,20 @@ $(function () {
                     console.log('1号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
                 }
                 if (statusTxt == "error")
-                    alert("Error: " + xhr.status + ": " + xhr.statusText);
+                    console.log("Error: " + xhr.status + ": " + xhr.statusText);
             });
         }
         console.log('client-msg:' + obj.number);
     });
 
-
     // 指定图表的配置项和数据
     /**
      * 折线图
      */
-
+    /**
+     * 初始化数据
+     */
+    var initData = [];
     option = {
         title: {
             text: '超声波物位计',
@@ -145,17 +147,26 @@ $(function () {
                 }
             },
             boundaryGap: true,
-            data: (function () {
-                var now = new Date();
-                var res = [];
-                var len = 10;
-                while (len--) {
-                    res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
-                    now = new Date(now - 2000);
-                }
-                return res;
-            })()
+            data:
+            (function () {
+                var initx = [];
+                $.ajax({
+                    type: "get",
+                    url: "/api/monitor/repo?repo=1&number=10",
+                    async: false,
+                    success: function (data) {
+                        var res = [];
+                        var len = 10;
+                        while (len--) {
+                            res.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                        }
+                        initx = res;
+                    }
+                });
+                console.log(initx);
+                return initx;
 
+            })()
         },
         yAxis: {
             splitLine: { //网格线
@@ -170,31 +181,28 @@ $(function () {
             name: '最新高度',
             type: 'line',
             data: (function () {
-                var res = [];
-                var len = 0;
-                while (len < 10) {
-                    res.push((Math.random() * 10 + 5).toFixed(1) - 0);
-                    len++;
-                }
-                return res;
+                var inits = [];
+                $.ajax({
+                    type: "get",
+                    url: "/api/monitor/repo?repo=1&number=10",
+                    async: false,
+                    success: function (data) {
+                        var res = [];
+                        var len = 0;
+                        while (len < 10) {
+                            res.push((Math.random() * 10 + 5).toFixed(1) - 0);
+                            len++;
+                        }
+                        console.log(inits);
+                        inits = res;
+                    }
+                });
+                return inits;
             })()
 
         }]
     };
 
-    // setInterval(function () {
-
-    //     for (var i = 0; i < 5; i++) {
-    //         data.shift();
-    //         data.push(randomData());
-    //     }
-
-    //     lineChart.setOption({
-    //         series: [{
-    //             data: data
-    //         }]
-    //     });
-    // }, 1000);
 
     /**
      * 柱状图

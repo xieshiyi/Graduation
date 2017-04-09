@@ -2,5 +2,5 @@ Graduation/node_modules
 *.doc*
 ~*
 *.ppt*
-Graduation/*.log
 Graduate/*.log
+Graduation/*.log
