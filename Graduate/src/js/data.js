@@ -80,17 +80,22 @@ $(function () {
 
     var socket = io('http://monitor.io:8080/');
     socket.on('monitor', function (obj) {
+        /** 监听后台数据变化
+         * 各个仓库变化，传送变化的数据，进行处理后展示到前端
+        */
         if (obj.number == '1') {
-            $.get('/api/monitor/num1', function (responseTxt, statusTxt, xhr) {
+            $.get('/api/monitor/repo?repo=1&number=1', function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
+                    console.log(responseTxt);
+                    axisData = new Date(responseTxt[0].time).toLocaleTimeString().replace(/^\D*/, '');
+                    var data = option.series[0].data;
                     data.shift();
-                    data.push(randomData(responseTxt));
-                    lineChart.setOption({
-                        series: [{
-                            data: data
-                        }]
-                    });
-                    console.log(data[8]+'---'+new Date(responseTxt[0].time)+'---'+responseTxt[0].height);
+                    data.push((responseTxt[0].height).toFixed(2));
+                    option.xAxis.data.shift();
+                    option.xAxis.data.push(axisData);
+                    lineChart.setOption(option);
+
+                    console.log('1号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
                 }
                 if (statusTxt == "error")
                     alert("Error: " + xhr.status + ": " + xhr.statusText);
@@ -104,49 +109,17 @@ $(function () {
     /**
      * 折线图
      */
-    function randomData(response) {
-        now = new Date(response[0].time);
-        value = response[0].height;
-        return {
-            name: now.toString(),
-            value: [
-                [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                value
-            ]
-        }
-    }
-    function setData() {
-        now = new Date(+now + oneDay);
-        value = value + Math.random() * 21 - 10;
-        return {
-            name: now.toString(),
-            value: [
-                [now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'),
-                Math.round(value)
-            ]
-        }
-    }
-
-    var data = [];
-    var now = +new Date();
-    var oneDay = 24 * 3600 * 1000;
-    var value = Math.random() * 1000;
-    for (var i = 0; i < 10; i++) {
-        data.push(setData());
-    }
 
     option = {
         title: {
             text: '超声波物位计',
             subtext: ''
         },
+        legend: {
+            data: ['最新高度']
+        },
         tooltip: {
             trigger: 'axis',
-            formatter: function (params) {
-                params = params[0];
-                var date = new Date(params.name);
-                return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' : ' + params.value[1];
-            },
             axisPointer: {
                 animation: false
             }
@@ -160,25 +133,52 @@ $(function () {
             }
         },
         xAxis: {
-            type: 'time',
+            type: 'category',
             splitLine: {
                 show: false
-            }
+            },
+            splitLine: { //网格线
+                show: true,
+                lineStyle: {
+                    color: ['#b1b1b1'],
+                    type: 'dashed'
+                }
+            },
+            boundaryGap: true,
+            data: (function () {
+                var now = new Date();
+                var res = [];
+                var len = 10;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+                    now = new Date(now - 2000);
+                }
+                return res;
+            })()
 
         },
         yAxis: {
-            type: 'value',
-            boundaryGap: [0, '100%'],
-            splitLine: {
-                show: false
+            splitLine: { //网格线
+                show: true,
+                lineStyle: {
+                    color: ['#b1b1b1'],
+                    type: 'dashed'
+                }
             }
         },
         series: [{
-            name: '模拟数据',
+            name: '最新高度',
             type: 'line',
-            showSymbol: false,
-            hoverAnimation: false,
-            data: data
+            data: (function () {
+                var res = [];
+                var len = 0;
+                while (len < 10) {
+                    res.push((Math.random() * 10 + 5).toFixed(1) - 0);
+                    len++;
+                }
+                return res;
+            })()
+
         }]
     };
 

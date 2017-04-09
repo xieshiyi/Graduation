@@ -18,8 +18,6 @@ var io = require('socket.io')(http);
 //   // });
 // });
 
-
-
 const Influx = require('influx');
 const influx = new Influx.InfluxDB({
   host: 'localhost',
@@ -48,68 +46,22 @@ router.get('/insert', function (req, res, next) {
         tags: { number: i },
         fields: { height: h },
       }
-    ]).then(() =>  {
-        io.emit('monitor', {'number': i,'height':h});     
-     res.send(200);
-    }); 
+    ]).then(() => {
+      io.emit('monitor', { 'number': i, 'height': h });
+      res.send(200);
+    });
   }
 });
 /* GET users listing. */
 /**
- * 对仓库1的监听
+ * 对仓库的监听
  */
-router.get('/num1', function (req, res, next) {
-    return influx.query(`
-    select * from monitor where number='1' order by time desc limit 1
+router.get('/repo', function (req, res, next) {
+  var param = req.query || req.params;
+  console.log(param);
+  return influx.query(` 
+  select * from monitor where number =  ${param.repo} order by time desc limit ${parseInt(param.number)}
   `).then(rows => res.json(rows));
-});
-/**
- * 对仓库2的监听
- */
-router.get('/num2', function (req, res, next) {
-  influx.writePoints([
-    {
-      measurement: 'monitor',
-      tags: { number: 2 },
-      fields: { height: Math.random() },
-    }
-  ]).then(() => {
-    return influx.query(`
-    select * from monitor where number='2'
-  `)
-  }).then(rows => res.json(rows))
-});
-/**
- * 对仓库3的监听
- */
-router.get('/num3', function (req, res, next) {
-  influx.writePoints([
-    {
-      measurement: 'monitor',
-      tags: { number: 3 },
-      fields: { height: Math.random() },
-    }
-  ]).then(() => {
-    return influx.query(`
-    select * from monitor where number='3'
-  `)
-  }).then(rows => res.json(rows))
-});
-/**
- * 对仓库4的监听
- */
-router.get('/num4', function (req, res, next) {
-  influx.writePoints([
-    {
-      measurement: 'monitor',
-      tags: { number: 4 },
-      fields: { height: Math.random() },
-    }
-  ]).then(() => {
-    return influx.query(`
-    select * from monitor where number='4'
-  `)
-  }).then(rows => res.json(rows))
 });
 
 http.listen(8080, function () {
