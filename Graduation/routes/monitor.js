@@ -39,7 +39,7 @@ const influx = new Influx.InfluxDB({
  */
 router.get('/insert', function (req, res, next) {
   for (let i = 1; i < 5; i++) {
-    let h = Math.random();
+    let h = Math.random()*10;
     influx.writePoints([
       {
         measurement: 'monitor',
@@ -58,8 +58,6 @@ router.get('/insert', function (req, res, next) {
  */
 router.get('/repo', function (req, res, next) {
   var param = req.query || req.params;
-  console.log(param);
-  
   return influx.query(` 
   select * from monitor where number = '${param.repo}' order by time desc limit ${parseInt(param.number)}
   `).then(rows => res.json(rows));

@@ -86,8 +86,7 @@ $(function () {
         if (obj.number == '1') {
             $.get('/api/monitor/repo?repo=1&number=1', function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
-                    console.log(responseTxt);
-                    axisData = new Date(responseTxt[0].time).toLocaleTimeString().replace(/^\D*/, '');
+                    var axisData = new Date(responseTxt[0].time).toLocaleTimeString().replace(/^\D*/, '');
                     var data = option.series[0].data;
                     data.shift();
                     data.push((responseTxt[0].height).toFixed(2));
@@ -96,6 +95,36 @@ $(function () {
                     lineChart.setOption(option);
 
                     console.log('1号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                }
+                if (statusTxt == "error")
+                    console.log("Error: " + xhr.status + ": " + xhr.statusText);
+            });
+        }
+        if (obj.number == '2') {
+            $.get('/api/monitor/repo?repo=2&number=1', function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    var axisData = new Date(responseTxt[0].time).toLocaleTimeString().replace(/^\D*/, '');
+                    var dataBar = optionBar.series[0].data;
+                    dataBar.shift();
+                    dataBar.push((responseTxt[0].height).toFixed(2));
+                    optionBar.xAxis.data.shift();
+                    optionBar.xAxis.data.push(axisData);
+                    barChart.setOption(optionBar);
+
+                    console.log('2号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                }
+                if (statusTxt == "error")
+                    console.log("Error: " + xhr.status + ": " + xhr.statusText);
+            });
+        }
+        if (obj.number == '3') {
+            $.get('/api/monitor/repo?repo=3&number=1', function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    var newdataRadar = (responseTxt[0].height.toFixed(2)) / 10;
+                    optionRadar.series[0].data = [newdataRadar, newdataRadar - 0.1, newdataRadar - 0.2, newdataRadar - 0.3];
+                    radarChart.setOption(optionRadar);
+                    console.log('新水球数据：' + newdataRadar);
+                    console.log('3号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -110,15 +139,39 @@ $(function () {
      */
     /**
      * 初始化数据
+     * dataLine:折线图初始化数据
+     * xAxisDataLine:X轴初始化
      */
-    var initData = [];
+    var dataLine = [];
+    var xAxisDataLine = [];
+    $.ajax({
+        type: "get",
+        url: "/api/monitor/repo?repo=1&number=10",
+        async: false,
+        success: function (data) {
+            var res = [];
+            var xLine = [];
+            var len = 0;
+            while (len < 10) {
+                res.unshift((data[len].height).toFixed(2));
+                xLine.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                len++;
+            }
+
+            dataLine = res;
+            xAxisDataLine = xLine;
+            console.log('折线图X轴初始化：:---' + xAxisDataLine);
+            console.log('折线图数据初始化:---' + dataLine);
+        }
+    });
     option = {
         title: {
             text: '超声波物位计',
             subtext: ''
         },
         legend: {
-            data: ['最新高度']
+            data: ['最新高度'],
+            align: 'left'
         },
         tooltip: {
             trigger: 'axis',
@@ -147,26 +200,7 @@ $(function () {
                 }
             },
             boundaryGap: true,
-            data:
-            (function () {
-                var initx = [];
-                $.ajax({
-                    type: "get",
-                    url: "/api/monitor/repo?repo=1&number=10",
-                    async: false,
-                    success: function (data) {
-                        var res = [];
-                        var len = 10;
-                        while (len--) {
-                            res.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
-                        }
-                        initx = res;
-                    }
-                });
-                console.log(initx);
-                return initx;
-
-            })()
+            data: xAxisDataLine
         },
         yAxis: {
             splitLine: { //网格线
@@ -180,25 +214,7 @@ $(function () {
         series: [{
             name: '最新高度',
             type: 'line',
-            data: (function () {
-                var inits = [];
-                $.ajax({
-                    type: "get",
-                    url: "/api/monitor/repo?repo=1&number=10",
-                    async: false,
-                    success: function (data) {
-                        var res = [];
-                        var len = 0;
-                        while (len < 10) {
-                            res.push((Math.random() * 10 + 5).toFixed(1) - 0);
-                            len++;
-                        }
-                        console.log(inits);
-                        inits = res;
-                    }
-                });
-                return inits;
-            })()
+            data: dataLine
 
         }]
     };
@@ -206,59 +222,62 @@ $(function () {
 
     /**
      * 柱状图
+     * xAxisDataBar：柱状图X轴初始化
+     * dataBar：柱状图数据初始化
      */
-    var xAxisData = [];
-    var data1 = [];
-    var data2 = [];
-    for (var i = 0; i < 100; i++) {
-        xAxisData.push('类目' + i);
-        data1.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
-        data2.push((Math.cos(i / 5) * (i / 5 - 10) + i / 6) * 5);
-    }
+    var xAxisDataBar = [];
+    var dataBar = [];
+    $.ajax({
+        type: "get",
+        url: "/api/monitor/repo?repo=2&number=10",
+        async: false,
+        success: function (data) {
+            var res = [];
+            var xBar = [];
+            var len = 0;
+            while (len < 10) {
+                res.unshift((data[len].height).toFixed(2));
+                xBar.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                len++;
+            }
 
-    option2 = {
-        title: {
-            text: ' '
-        },
+            dataBar = res;
+            xAxisDataBar = xBar;
+            console.log('柱状图X轴初始化:---' + xAxisDataBar);
+            console.log('柱状图数据初始化:---' + dataBar);
+        }
+    });
+    optionBar = {
+        tooltip: { trigger: 'axis' },
         legend: {
-            data: ['bar', 'bar2'],
-            align: 'left'
+            data: ['最新高度']
         },
         toolbox: {
-            // y: 'bottom',
+            show: true,
             feature: {
                 magicType: {
                     type: ['stack', 'tiled']
                 },
-                dataView: {},
+                dataView: { readOnly: false },
                 saveAsImage: {
                     pixelRatio: 2
-                }
+                },
             }
         },
-        tooltip: {},
         xAxis: {
-            data: xAxisData,
-            silent: false,
-            splitLine: {
-                show: false
-            }
+            type: 'category',
+            boundaryGap: true,
+            data: xAxisDataBar
         },
         yAxis: {
+            type: 'value'
         },
         series: [{
-            name: 'bar',
+            name: '最新高度',
             type: 'bar',
-            data: data1,
+            data: dataBar,
             animationDelay: function (idx) {
                 return idx * 10;
-            }
-        }, {
-            name: 'bar2',
-            type: 'bar',
-            data: data2,
-            animationDelay: function (idx) {
-                return idx * 10 + 100;
             }
         }],
         animationEasing: 'elasticOut',
@@ -269,124 +288,30 @@ $(function () {
 
     /**
      * 雷达图
+     * dataRader：水球图数据初始化
      */
-    option3 = {
-        title: {
+    var dataRadar = [];
+    $.ajax({
+        type: "get",
+        url: "/api/monitor/repo?repo=3&number=1",
+        async: false,
+        success: function (data) {
+            var len = 0;
+            while (len < 4) {
+                dataRadar.push((data[0].height.toFixed(2)) / 10 - len / 10);
+                len++;
+            }
+            console.log('水球图:---' + dataRadar);
+        }
+    });
 
-        },
-        tooltip: {
-            trigger: 'axis'
-        },
-        legend: {
-            data: ['最新成交价', '预购队列']
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                dataView: { readOnly: false },
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        dataZoom: {
-            show: false,
-            start: 0,
-            end: 100
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: true,
-                data: (function () {
-                    var now = new Date();
-                    var res = [];
-                    var len = 10;
-                    while (len--) {
-                        res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
-                        now = new Date(now - 2000);
-                    }
-                    return res;
-                })()
-            },
-            {
-                type: 'category',
-                boundaryGap: true,
-                data: (function () {
-                    var res = [];
-                    var len = 10;
-                    while (len--) {
-                        res.push(len + 1);
-                    }
-                    return res;
-                })()
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                scale: true,
-                name: '价格',
-                max: 20,
-                min: 0,
-                boundaryGap: [0.2, 0.2]
-            },
-            {
-                type: 'value',
-                scale: true,
-                name: '预购量',
-                max: 1200,
-                min: 0,
-                boundaryGap: [0.2, 0.2]
-            }
-        ],
-        series: [
-            {
-                name: '预购队列',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 1,
-                data: (function () {
-                    var res = [];
-                    var len = 10;
-                    while (len--) {
-                        res.push(Math.round(Math.random() * 1000));
-                    }
-                    return res;
-                })()
-            },
-            {
-                name: '最新成交价',
-                type: 'line',
-                data: (function () {
-                    var res = [];
-                    var len = 0;
-                    while (len < 10) {
-                        res.push((Math.random() * 10 + 5).toFixed(1) - 0);
-                        len++;
-                    }
-                    return res;
-                })()
-            }
-        ]
+    optionRadar = {
+        series: [{
+            type: 'liquidFill',
+            data: dataRadar,
+            radius: '80%'
+        }]
     };
-    var count = 11;
-    setInterval(function () {
-        axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
-
-        var data3 = option3.series[0].data;
-        var data4 = option3.series[1].data;
-        data3.shift();
-        data3.push(Math.round(Math.random() * 1000));
-        data4.shift();
-        data4.push((Math.random() * 10 + 5).toFixed(1) - 0);
-
-        option3.xAxis[0].data.shift();
-        option3.xAxis[0].data.push(axisData);
-        option3.xAxis[1].data.shift();
-        option3.xAxis[1].data.push(count++);
-
-        radarChart.setOption(option3);
-    }, 2100);
 
     /**
      *仪表盘
@@ -418,120 +343,15 @@ $(function () {
     /**
      * 仪表盘的時間段監控 
      */
-    var dataAxis = ['点', '击', '柱', '子', '或', '者', '两', '指', '在', '触', '屏', '上', '滑', '动', '能', '够', '自', '动', '缩', '放'];
-    var data5 = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149, 210, 122, 133, 334, 198, 123, 125, 220];
-    var yMax = 500;
-    var dataShadow = [];
 
-    for (var i = 0; i < data5.length; i++) {
-        dataShadow.push(yMax);
-    }
-
-    option5 = {
-        title: {
-            text: '可缩放',
-            subtext: ' '
-        },
-        toolbox: {
-            show: true,
-            feature: {
-                dataView: { readOnly: false },
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        xAxis: {
-            data: dataAxis,
-            axisLabel: {
-                inside: true,
-                textStyle: {
-                    color: '#fff'
-                }
-            },
-            axisTick: {
-                show: false
-            },
-            axisLine: {
-                show: false
-            },
-            z: 10
-        },
-        yAxis: {
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                textStyle: {
-                    color: '#999'
-                }
-            }
-        },
-        dataZoom: [
-            {
-                type: 'inside'
-            }
-        ],
-        series: [
-            { // For shadow
-                type: 'bar',
-                itemStyle: {
-                    normal: { color: 'rgba(0,0,0,0.05)' }
-                },
-                barGap: '-100%',
-                barCategoryGap: '40%',
-                data: dataShadow,
-                animation: false
-            },
-            {
-                type: 'bar',
-                itemStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                { offset: 0, color: '#83bff6' },
-                                { offset: 0.5, color: '#188df0' },
-                                { offset: 1, color: '#188df0' }
-                            ]
-                        )
-                    },
-                    emphasis: {
-                        color: new echarts.graphic.LinearGradient(
-                            0, 0, 0, 1,
-                            [
-                                { offset: 0, color: '#2378f7' },
-                                { offset: 0.7, color: '#2378f7' },
-                                { offset: 1, color: '#83bff6' }
-                            ]
-                        )
-                    }
-                },
-                data: data5
-            }
-        ]
-    };
-
-    // Enable data zoom when user click bar.
-    var zoomSize = 6;
-    dataRadarChart.on('click', function (params) {
-        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
-        dataRadarChart.dispatchAction({
-            type: 'dataZoom',
-            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
-            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
-        });
-    });
     // 使用刚指定的配置项和数据显示图表。
 
     lineChart.setOption(option);
     dataLineChart.setOption(option);
-    barChart.setOption(option2);
-    dataBarChart.setOption(option2);
-    radarChart.setOption(option3);
-    dataRadarChart.setOption(option3);
+    barChart.setOption(optionBar);
+    dataBarChart.setOption(optionBar);
+    radarChart.setOption(optionRadar);
+    dataRadarChart.setOption(optionRadar);
     dashBoard.setOption(option4);
-    dataDashBoard.setOption(option5);
+    //dataDashBoard.setOption(option5);
 })
