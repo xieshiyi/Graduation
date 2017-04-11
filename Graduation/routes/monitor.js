@@ -38,7 +38,9 @@ const influx = new Influx.InfluxDB({
  * 插入数据
  */
 router.get('/insert', function (req, res, next) {
-  for (let i = 1; i < 5; i++) {
+  let count=10;
+  while(count--){
+    for (let i = 1; i < 5; i++) {
     let h = Math.random()*10;
     influx.writePoints([
       {
@@ -51,6 +53,8 @@ router.get('/insert', function (req, res, next) {
       res.send(200);
     });
   }
+  }
+  
 });
 /* GET users listing. */
 /**
@@ -60,6 +64,14 @@ router.get('/repo', function (req, res, next) {
   var param = req.query || req.params;
   return influx.query(` 
   select * from monitor where number = '${param.repo}' order by time desc limit ${parseInt(param.number)}
+  `).then(rows => res.json(rows));
+});
+
+
+router.get('/repo/select', function (req, res, next) {
+  var param = req.query || req.params;
+  return influx.query(` 
+  select * from monitor where number = '${param.repo}' and time >= now() - ${param.hours}h
   `).then(rows => res.json(rows));
 });
 

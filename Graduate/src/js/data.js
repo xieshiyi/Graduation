@@ -37,36 +37,6 @@ $(function () {
     navChange($('.time_dataFour'), $('.alarm_data_pageFour'), $('.time_data_pageFour'), $('.nav_tabs_titleFour'));
     navChange($('.alarm_dataFour'), $('.time_data_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
 
-
-    //时间筛选
-    function chooseTime(pageName, menuName) {
-        pageName.find(menuName).bind('click', function () {
-            let dropdowMenu = this.text;
-            console.log(dropdowMenu);
-            this.text = pageName.find('.dropdown-toggle').text();
-            pageName.find(' .dropdown-toggle').html(dropdowMenu + '<span class="caret"></span>');
-        });
-    }
-    //页面一
-    chooseTime($('.time_data_pageOne'), '.dropdown-menu-one');
-    chooseTime($('.time_data_pageOne'), '.dropdown-menu-two');
-    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-two');
-    //页面二
-    chooseTime($('.time_data_pageTwo'), '.dropdown-menu-one');
-    chooseTime($('.time_data_pageTwo'), '.dropdown-menu-two');
-    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-two');
-    //页面三
-    chooseTime($('.time_data_pageThree'), '.dropdown-menu-one');
-    chooseTime($('.time_data_pageThree'), '.dropdown-menu-two');
-    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-two');
-    //页面四
-    chooseTime($('.time_data_pageFour'), '.dropdown-menu-one');
-    chooseTime($('.time_data_pageFour'), '.dropdown-menu-two');
-    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-two');
     // 基于准备好的dom，初始化echarts实例
     var lineChart = echarts.init(document.getElementById('line-chart'));
     var dataLineChart = echarts.init(document.getElementById('data-line-chart'));
@@ -125,6 +95,21 @@ $(function () {
                     radarChart.setOption(optionRadar);
                     console.log('新水球数据：' + newdataRadar);
                     console.log('3号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                }
+                if (statusTxt == "error")
+                    console.log("Error: " + xhr.status + ": " + xhr.statusText);
+            });
+        }
+        if (obj.number == '4') {
+            $.get('/api/monitor/repo?repo=4&number=1', function (responseTxt, statusTxt, xhr) {
+                if (statusTxt == "success") {
+                    var newdataBoard = (responseTxt[0].height * 10).toFixed(2);
+                    optionBoard.series[0].data[0].value = newdataBoard;
+                    optionBoard.series[0].axisLine.lineStyle.color[0][0] = (newdataBoard / 100).toFixed(2);
+                    optionBoard.series[0].axisLine.lineStyle.color[0][1] = detectionData(newdataBoard);
+                    dashBoard.setOption(optionBoard);
+                    console.log('新仪表盘数据：' + newdataBoard);
+                    console.log('4号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -273,6 +258,9 @@ $(function () {
             type: 'value'
         },
         series: [{
+            itemStyle: {
+                normal: { color: '#749f83' }
+            },
             name: '最新高度',
             type: 'bar',
             data: dataBar,
@@ -312,46 +300,392 @@ $(function () {
             radius: '80%'
         }]
     };
-
     /**
      *仪表盘
      */
-    option4 = {
+    var dataBoard = 0;
+    $.ajax({
+        type: "get",
+        url: "/api/monitor/repo?repo=3&number=1",
+        async: false,
+        success: function (data) {
+            dataBoard = (data[0].height * 10).toFixed(2);
+
+            console.log('仪表盘:---' + dataBoard);
+        }
+    });
+    function detectionData(str) {
+        var color = '#5eb95e';
+        if (str >= 20 && str <= 80) {
+            color = '#F37B1D';
+        } else if (str > 80) {
+            color = '#dd514c';
+        }
+        return color;
+    }
+    var optionBoard = {
+        "tooltip": {
+            "formatter": "{a} <br/>{b} : {c}%"
+        },
+        "series": [{
+            "name": "业务指标",
+            "type": "gauge",
+            "splitNumber": 5,
+            "axisLine": {
+                "lineStyle": {
+                    "color": [
+                        [(dataBoard / 100).toFixed(2), detectionData(dataBoard)],
+                        [1, "#e9ecf3"]
+                    ],
+                    "width": 50
+                }
+            },
+            "axisTick": {
+                "lineStyle": {
+                    "color": "#3bb4f2",
+                    "width": 3
+                },
+                "length": -25,
+                "splitNumber": 1
+            },
+            "axisLabel": {
+                "distance": -80,
+                "textStyle": {
+                    "color": "#000"
+                }
+            },
+            "splitLine": {
+                "show": false
+            },
+            "itemStyle": {
+                "normal": {
+                    "color": "#494f50"
+                }
+            },
+            "detail": {
+                "formatter": "{value}%",
+                "offsetCenter": [0, "60%"],
+                "textStyle": {
+                    "fontSize": 30,
+                    "color": "#F37B1D"
+                }
+            },
+            "title": {
+                "offsetCenter": [0, "100%"]
+            },
+            "data": [{
+                "name": "高度",
+                "value": dataBoard
+            }]
+        }]
+    }
+
+    /**
+     * 時間段監控 图表
+     * 仓库1:optionSelect1
+     */
+    function initData(repo, hours) {
+        var xRepo = [];
+        var dataRepo = [];
+        $.ajax({
+            type: "get",
+            url: "/api/monitor/repo/select?repo=" + repo + "&hours=" + hours + "",
+            async: false,
+            success: function (data) {
+                var res = [];
+                var xData = [];
+                var len = 0;
+                while (len < data.length) {
+                    res.unshift((data[len].height).toFixed(2));
+                    xData.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                    len++;
+                }
+                xRepo = xData;
+                dataRepo = res;
+            }
+        });
+        var result = { time: xRepo, height: dataRepo };
+        return result;
+    }
+
+    var result1 = initData(1, 3);
+    console.log(result1)
+    var result2 = initData(2, 3);
+    var result3 = initData(3, 3);
+    var result4 = initData(4, 3);
+    optionSelect1 = {
+        title: {
+            text: '时间段高度',
+            subtext: ''
+        },
         tooltip: {
-            formatter: "{a} <br/>{b} : {c}%"
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['高度']
         },
         toolbox: {
+            show: true,
             feature: {
+                dataZoom: {},
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
                 restore: {},
                 saveAsImage: {}
             }
         },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: result1.time
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} m'
+            }
+        },
         series: [
             {
-                name: '业务指标',
-                type: 'gauge',
-                detail: { formatter: '{value}%' },
-                data: [{ value: 50, name: '完成率' }]
+                name: '高度',
+                type: 'line',
+                data: result1.height,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
+                },
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
+                }
             }
         ]
     };
 
-    setInterval(function () {
-        option4.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
-        dashBoard.setOption(option4, true);
-    }, 2000);
+    optionSelect2 = {
+        title: {
+            text: '时间段高度',
+            subtext: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['高度']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {},
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: result2.time
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} m'
+            }
+        },
+        series: [
+            {
+                itemStyle: {
+                    normal: { color: '#bda29a' }
+                },
+                name: '高度',
+                type: 'line',
+                data: result2.height,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
+                },
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
+                }
+            }
+        ]
+    };
+    optionSelect3 = {
+        title: {
+            text: '时间段高度',
+            subtext: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['高度']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {},
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: result3.time
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} m'
+            }
+        },
+        series: [
+            {
+                itemStyle: {
+                    normal: { color: '#61a0a8' }
+                },
+                name: '高度',
+                type: 'line',
+                data: result3.height,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
+                },
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
+                }
+            }
+        ]
+    };
+    optionSelect4 = {
+        title: {
+            text: '时间段高度',
+            subtext: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['高度']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {},
+                dataView: { readOnly: false },
+                magicType: { type: ['line', 'bar'] },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: result4.time
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} m'
+            }
+        },
+        series: [
+            {
+                itemStyle: {
+                    normal: { color: '#d48265' }
+                },
+                name: '高度',
+                type: 'line',
+                data: result4.height,
+                markPoint: {
+                    data: [
+                        { type: 'max', name: '最大值' },
+                        { type: 'min', name: '最小值' }
+                    ]
+                },
+                markLine: {
+                    data: [
+                        { type: 'average', name: '平均值' }
+                    ]
+                }
+            }
+        ]
+    };
     /**
-     * 仪表盘的時間段監控 
+     * 时间段筛选
      */
+    function chooseTimeData(pageName, menuName, repo, option) {
+        var h = 0;
+        pageName.find(menuName).bind('click', function () {
+            let dropdowMenu = this.text;
+            console.log(dropdowMenu);
+            this.text = pageName.find('.dropdown-toggle').text();
+            pageName.find(' .dropdown-toggle').html(dropdowMenu + '<span class="caret"></span>');
+            if (dropdowMenu == '3个小时内') {
+                h = 3;
+            }
+            else if (dropdowMenu == '12个小时内') {
+                h = 12;
+            }
+            else h = 24;
+            var result = initData(repo, h);
+            console.log(result)
+            option.xAxis.data = result.time;
+            option.series[0].data = result.height;
+        });
+    }
+    /**
+     * 报警详情查询
+     */
+    function chooseTime() {
+
+    }
+
+    //页面一
+    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-one', '1', optionSelect1);
+    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-two', '1', optionSelect1);
+    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-one');
+    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-two');
+    //页面二
+    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-one', '2', optionSelect2);
+    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-two', '2', optionSelect2);
+    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-one');
+    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-two');
+    //页面三
+    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-one', '3', optionSelect3);
+    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-two', '3', optionSelect3);
+    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-one');
+    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-two');
+    //页面四
+    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-one', '4', optionSelect4);
+    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-two', '4', optionSelect4);
+    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-one');
+    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-two');
 
     // 使用刚指定的配置项和数据显示图表。
 
     lineChart.setOption(option);
-    dataLineChart.setOption(option);
+    dataLineChart.setOption(optionSelect1);
     barChart.setOption(optionBar);
-    dataBarChart.setOption(optionBar);
+    dataBarChart.setOption(optionSelect2);
     radarChart.setOption(optionRadar);
-    dataRadarChart.setOption(optionRadar);
-    dashBoard.setOption(option4);
-    //dataDashBoard.setOption(option5);
+    dataRadarChart.setOption(optionSelect3);
+    dashBoard.setOption(optionBoard);
+    dataDashBoard.setOption(optionSelect4);
 })
