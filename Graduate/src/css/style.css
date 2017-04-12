@@ -170,10 +170,16 @@ body {
     max-width: 310px;
     padding: 0 15px;
 }
+
 .form-control{
   display: -webkit-inline-box !important;
 }
-
+.btn_modify{
+  display: block;
+}
+.btn_bind{
+  display: none;
+}
 /*筛选页面框*/
 .nav-tabs>li>a{
   color: #333!important;

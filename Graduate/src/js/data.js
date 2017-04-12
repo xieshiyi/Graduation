@@ -37,6 +37,57 @@ $(function () {
     navChange($('.time_dataFour'), $('.alarm_data_pageFour'), $('.time_data_pageFour'), $('.nav_tabs_titleFour'));
     navChange($('.alarm_dataFour'), $('.time_data_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
 
+    /**
+     * 管理员界面
+     * 邮箱账号管理：
+     * email：邮箱账号
+     * password：邮箱密码
+     */
+
+    function initEmail() {
+        $.ajax({
+            type: "get",
+            url: '/api/email/info',
+            async: false,
+            success: function (data) {
+                $('.email').val(data[0].email);
+                $('.password').val(data[0].password);
+                console.log('邮箱账号：---' + data[0].email + '邮箱密码:---' + data[0].password);
+            }
+        });
+    }
+    initEmail();
+
+    $('.btn_modify').bind('click', function () {
+        document.getElementsByClassName('email')[0].disabled = '';
+        document.getElementsByClassName('password')[0].disabled = '';
+        $('.btn_bind').css('display', 'block');
+        $('.btn_modify').css('display', 'none');
+
+    });
+    $('.btn_bind').bind('click', function () {
+        var email = $('.email').val();
+        var password = $('.password').val();
+        var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
+        console.log(email + '---' + password);
+        if (email == '' || password == '') {
+            alert('请输入绑定邮箱账号或密码!');
+        }
+        else if (matchEmail.exec(email)) {
+            var email_posting = $.get('/api/email/updateEmail', { email: email, password: password }, function (result) {
+                alert('绑定成功！');
+            });
+            initEmail();
+            document.getElementsByClassName('email')[0].disabled = 'disabled';
+            document.getElementsByClassName('password')[0].disabled = 'disabled';
+            $('.btn_bind').css('display', 'none');
+            $('.btn_modify').css('display', 'block');
+        }
+        else {
+            alert('请输入正确邮箱账号！');
+        }
+    });
+
     // 基于准备好的dom，初始化echarts实例
     var lineChart = echarts.init(document.getElementById('line-chart'));
     var dataLineChart = echarts.init(document.getElementById('data-line-chart'));

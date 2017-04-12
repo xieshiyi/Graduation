@@ -11,11 +11,13 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
+    "fs": "0.0.1-security",
     "influx": "",
     "influx-express": "^0.1.1",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
     "mysql": "latest",
+    "nodemailer": "^4.0.0",
     "serve-favicon": "~2.3.2",
     "socket.io": "^1.7.3"
   }

@@ -18,6 +18,9 @@ var io = require('socket.io')(http);
 //   // });
 // });
 
+/**
+ * 导入influxdb模块
+ */
 const Influx = require('influx');
 const influx = new Influx.InfluxDB({
   host: 'localhost',
@@ -37,36 +40,36 @@ const influx = new Influx.InfluxDB({
 /**
  *数据监听，超过或者低于，发送邮箱进行报警
  */
-const nodemailer = require('nodemailer');
-const fs = require('fs')
-const argv = require('optimist').argv;
+// const nodemailer = require('nodemailer');
+// const fs = require('fs')
+// const argv = require('optimist').argv;
 
-const logfile = '/root/docker-reg-gc/log/' + argv._[0] + '.log';
+// const logfile = '/root/docker-reg-gc/log/' + argv._[0] + '.log';
 
-// create reusable transporter object using the default SMTP transport
-let transporter = nodemailer.createTransport({
-  service: 'QQex',
-  auth: {
-    user: 'you@email',
-    pass: 'youpassword'
-  }
-});
+// // create reusable transporter object using the default SMTP transport
+// let transporter = nodemailer.createTransport({
+//   service: 'QQex',
+//   auth: {
+//     user: 'you@email',
+//     pass: 'youpassword'
+//   }
+// });
 
-// setup email data with unicode symbols
-let mailOptions = {
-  from: 'sendfrom@email', // sender address
-  to: ['to@email1', 'to@email2'], // list of receivers
-  subject: 'ERROR: docker registry crontab error', // Subject line
-  text: fs.readFileSync(logfile) // plain text body
-};
+// // setup email data with unicode symbols
+// let mailOptions = {
+//   from: 'sendfrom@email', // sender address
+//   to: ['to@email1', 'to@email2'], // list of receivers
+//   subject: 'ERROR: docker registry crontab error', // Subject line
+//   text: fs.readFileSync(logfile) // plain text body
+// };
 
-// send mail with defined transport object
-transporter.sendMail(mailOptions, (error, info) => {
-  if (error) {
-    return console.log(error);
-  }
-  console.log('Message %s sent: %s', info.messageId, info.response);
-});
+// // send mail with defined transport object
+// transporter.sendMail(mailOptions, (error, info) => {
+//   if (error) {
+//     return console.log(error);
+//   }
+//   console.log('Message %s sent: %s', info.messageId, info.response);
+// });
 /**
  * 插入数据
  */
