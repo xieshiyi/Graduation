@@ -35,26 +35,61 @@ const influx = new Influx.InfluxDB({
   ]
 })
 /**
+ *数据监听，超过或者低于，发送邮箱进行报警
+ */
+const nodemailer = require('nodemailer');
+const fs = require('fs')
+const argv = require('optimist').argv;
+
+const logfile = '/root/docker-reg-gc/log/' + argv._[0] + '.log';
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+  service: 'QQex',
+  auth: {
+    user: 'you@email',
+    pass: 'youpassword'
+  }
+});
+
+// setup email data with unicode symbols
+let mailOptions = {
+  from: 'sendfrom@email', // sender address
+  to: ['to@email1', 'to@email2'], // list of receivers
+  subject: 'ERROR: docker registry crontab error', // Subject line
+  text: fs.readFileSync(logfile) // plain text body
+};
+
+// send mail with defined transport object
+transporter.sendMail(mailOptions, (error, info) => {
+  if (error) {
+    return console.log(error);
+  }
+  console.log('Message %s sent: %s', info.messageId, info.response);
+});
+/**
  * 插入数据
  */
 router.get('/insert', function (req, res, next) {
-  let count=10;
-  while(count--){
+  let count = 10;
+  while (count--) {
     for (let i = 1; i < 5; i++) {
-    let h = Math.random()*10;
-    influx.writePoints([
-      {
-        measurement: 'monitor',
-        tags: { number: i },
-        fields: { height: h },
-      }
-    ]).then(() => {
-      io.emit('monitor', { 'number': i, 'height': h });
-      res.send(200);
-    });
+      let h = Math.random() * 10;
+      influx.writePoints([
+        {
+          measurement: 'monitor',
+          tags: { number: i },
+          fields: { height: h },
+        }
+      ]).then(() => {
+        io.emit('monitor', { 'number': i, 'height': h });
+        res.send(200);
+      });
+
+
+    }
   }
-  }
-  
+
 });
 /* GET users listing. */
 /**

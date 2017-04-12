@@ -500,7 +500,7 @@ $(function () {
         series: [
             {
                 itemStyle: {
-                    normal: { color: '#bda29a' }
+                    normal: { color: '#ca8622' }
                 },
                 name: '高度',
                 type: 'line',
@@ -630,24 +630,30 @@ $(function () {
     /**
      * 时间段筛选
      */
-    function chooseTimeData(pageName, menuName, repo, option) {
+    function chooseTimeData(pageName, menuName, repo, option, chart) {
         var h = 0;
         pageName.find(menuName).bind('click', function () {
             let dropdowMenu = this.text;
-            console.log(dropdowMenu);
             this.text = pageName.find('.dropdown-toggle').text();
             pageName.find(' .dropdown-toggle').html(dropdowMenu + '<span class="caret"></span>');
-            if (dropdowMenu == '3个小时内') {
-                h = 3;
-            }
-            else if (dropdowMenu == '12个小时内') {
+            console.log(dropdowMenu);
+            // if (dropdowMenu === '3个小时内') {
+            //     h = 3;
+            // }
+            if (dropdowMenu === '12个小时内') {
                 h = 12;
             }
-            else h = 24;
+            else if (dropdowMenu === '一天内') {
+                h = 24;
+            }
+            else {
+                h = 3;
+            }
+            console.log(h);
             var result = initData(repo, h);
-            console.log(result)
             option.xAxis.data = result.time;
             option.series[0].data = result.height;
+            chart.setOption(option);
         });
     }
     /**
@@ -658,23 +664,23 @@ $(function () {
     }
 
     //页面一
-    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-one', '1', optionSelect1);
-    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-two', '1', optionSelect1);
+    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-one', '1', optionSelect1, dataLineChart);
+    chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-two', '1', optionSelect1, dataLineChart);
     chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-one');
     chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-two');
     //页面二
-    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-one', '2', optionSelect2);
-    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-two', '2', optionSelect2);
+    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-one', '2', optionSelect2, dataBarChart);
+    chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-two', '2', optionSelect2, dataBarChart);
     chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-one');
     chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-two');
     //页面三
-    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-one', '3', optionSelect3);
-    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-two', '3', optionSelect3);
+    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-one', '3', optionSelect3, dataRadarChart);
+    chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-two', '3', optionSelect3, dataRadarChart);
     chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-one');
     chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-two');
     //页面四
-    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-one', '4', optionSelect4);
-    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-two', '4', optionSelect4);
+    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-one', '4', optionSelect4, dataDashBoard);
+    chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-two', '4', optionSelect4, dataDashBoard);
     chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-one');
     chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-two');
 

@@ -1,111 +1,134 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>物位计监控系统</title>
+  <title>物位计监控系统</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="src/css/bootstrap.min.css" rel="stylesheet">
-    <link href="src/css/bootstrap.css.map" rel="stylesheet">
-    <link href="src/css/bootstrap.min.css.map" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="src/css/style.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="src/css/bootstrap.min.css" rel="stylesheet">
+  <link href="src/css/bootstrap.css.map" rel="stylesheet">
+  <link href="src/css/bootstrap.min.css.map" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="src/css/style.css" rel="stylesheet">
 
-    <!-- 引入 echarts.js -->
-    
-    
-    <script src="src/js/echarts.js"></script>
-    <script src="src/js/echarts-liquidfill.js"></script>
-    <script src="src/js/socket.io.min.js"></script>
-  </head>
+  <!-- 引入 echarts.js -->
+
+
+  <script src="src/js/echarts.js"></script>
+  <script src="src/js/echarts-liquidfill.js"></script>
+  <script src="src/js/socket.io.min.js"></script>
+</head>
+
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">物位计监控系统</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!--<li><a href="#">Dashboard</a></li>
+        <a class="navbar-brand" href="#">物位计监控系统</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <!--<li><a href="#">Dashboard</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Profile</a></li>-->
-            <li><a href="#">帮助</a></li>
-          </ul>
-          <!--<form class="navbar-form navbar-right">
+          <li><a href="#">帮助</a></li>
+        </ul>
+        <!--<form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
           </form>-->
+      </div>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <div class="fan">
+          <ul class="nav nav-sidebar">
+            <li class="nav_title one active"><a href="#">物位计 <span class="sr-only">(current)</span></a></li>
+            <li class="nav_title two"><a href="#">超声波</a></li>
+            <li class="nav_title three"><a href="#">电容式</a></li>
+            <li class="nav_title four"><a href="#">微波雷达</a></li>
+            <li class="nav_title five"><a href="#">静压式</a></li>
+          </ul>
         </div>
       </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <div class="fan">
-            <ul class="nav nav-sidebar">
-              <li class="nav_title one active"><a href="#">物位计 <span class="sr-only">(current)</span></a></li>
-              <li class="nav_title two"><a href="#">超声波</a></li>
-              <li class="nav_title three"><a href="#">电容式</a></li>
-              <li class="nav_title four"><a href="#">微波雷达</a></li>
-              <li class="nav_title five"><a href="#">静压式</a></li>
-            </ul>
-          </div>
-        </div>
-        <!--版块一-->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne">
-          <h1 class="page-header">物位计</h1>
+      <!--版块一-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne">
+        <h1 class="page-header">物位计</h1>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="../image/1.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <!--<h4>Label</h4>
+        <div class="row placeholders">
+          <div class="col-xs-6 col-sm-3 placeholder">
+            <img src="../image/1.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+            <!--<h4>Label</h4>
               <span class="text-muted">Something else</span>-->
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="../image/2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <!--<h4>Label</h4>
-              <span class="text-muted">Something else</span>-->
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="../image/3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <!--<h4>Label</h4>
-              <span class="text-muted">Something else</span>-->
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img src="../image/4.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-              <!--<h4>Label</h4>
-              <span class="text-muted">Something else</span>-->
-            </div>
           </div>
-          <h2 class="sub-header">报警提示邮箱</h2><br />
-          <h2 class="text-muted" style="float: left;">邮箱账号：</h2>
-          
-            <input type="text" class="form-control email" placeholder="请输入正确邮箱格式">
-             <button type="submit" class="btn btn-primary">确定</button>
-           
-         
+          <div class="col-xs-6 col-sm-3 placeholder">
+            <img src="../image/2.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+            <!--<h4>Label</h4>
+              <span class="text-muted">Something else</span>-->
+          </div>
+          <div class="col-xs-6 col-sm-3 placeholder">
+            <img src="../image/3.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+            <!--<h4>Label</h4>
+              <span class="text-muted">Something else</span>-->
+          </div>
+          <div class="col-xs-6 col-sm-3 placeholder">
+            <img src="../image/4.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+            <!--<h4>Label</h4>
+              <span class="text-muted">Something else</span>-->
+          </div>
         </div>
-        <!--版块二-->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo">
-          <h1 class="page-header">超声波物位计</h1>
-          <div class="table-responsive">
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
-                <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
+        <h2 class="sub-header">报警提示邮箱</h2><br />
+        <div class="email_bind">
+          <h2 class="text-muted" style="float: left;">账号：</h2>
+          <input type="text" class="form-control email" placeholder="请输入正确邮箱格式">
+        </div>
+        <div class="email_bind">
+          <h2 class="text-muted" style="float: left;">密码：</h2>
+          <input type="password" class="form-control password" placeholder="请输入邮箱密码">
+        </div>
+        <div class="email_bind">
+          <button type="submit" class="btn btn-lg btn-primary btn-block">绑定</button>
+        </div>
+
+
+      </div>
+      <!--版块二-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo">
+        <h1 class="page-header">超声波物位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
+            </ul>
+            <div class="time_data_page time_data_pageOne">
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                  </ul>
+                </li>
               </ul>
-              <div class="time_data_page time_data_pageOne">
+              <div class="placeholder chart-data" id='data-line-chart'></div>
+            </div>
+            <div class="alarm_data_page alarm_data_pageOne">
+              <div class="placeholder">
                 <ul class=" navbar-nav time_choose">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
@@ -115,54 +138,54 @@
                     </ul>
                   </li>
                 </ul>
-                  <div  class="placeholder chart-data" id='data-line-chart'></div>
-              </div>
-              <div class="alarm_data_page alarm_data_pageOne">
-                <div class="placeholder">
-                  <ul class=" navbar-nav time_choose">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
-                        <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>日期</th>
-                        <th>时间</th>
-                        <th>高度</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
-            
           </div>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
+
         </div>
-        <!--版块三-->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree">
-          <h1 class="page-header">电容式物位计</h1>
-          <div class="table-responsive">
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
-                <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
+      </div>
+      <!--版块三-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree">
+        <h1 class="page-header">电容式物位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageTwo'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                  </ul>
+                </li>
               </ul>
-              <div class='time_data_page time_data_pageTwo'>
+              <div class="placeholder chart-data" id='data-bar-chart'></div>
+            </div>
+            <div class="alarm_data_page alarm_data_pageTwo">
+              <div class="placeholder">
                 <ul class=" navbar-nav time_choose">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
@@ -172,54 +195,54 @@
                     </ul>
                   </li>
                 </ul>
-                <div  class="placeholder chart-data" id='data-bar-chart'></div>
-              </div>
-              <div class="alarm_data_page alarm_data_pageTwo">
-                <div class="placeholder">
-                  <ul class=" navbar-nav time_choose">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
-                        <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>日期</th>
-                        <th>时间</th>
-                        <th>高度</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>         
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
           </div>
+          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
         </div>
-        <!--版块四-->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFour">
-          <h1 class="page-header">微波雷达物位计</h1>
-          <div class="table-responsive">
-        
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
-                <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
+      </div>
+      <!--版块四-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFour">
+        <h1 class="page-header">微波雷达物位计</h1>
+        <div class="table-responsive">
+
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageThree'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                  </ul>
+                </li>
               </ul>
-              <div class='time_data_page time_data_pageThree'>
+              <div class='placeholder chart-data' id='data-radar-chart'></div>
+            </div>
+            <div class='alarm_data_page alarm_data_pageThree'>
+              <div class="placeholder">
                 <ul class=" navbar-nav time_choose">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
@@ -229,54 +252,54 @@
                     </ul>
                   </li>
                 </ul>
-                  <div  class='placeholder chart-data' id='data-radar-chart'></div>
-              </div>
-              <div class='alarm_data_page alarm_data_pageThree'>
-                <div class="placeholder">
-                  <ul class=" navbar-nav time_choose">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
-                        <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>日期</th>
-                        <th>时间</th>
-                        <th>高度</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>      
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
-            
           </div>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
+
         </div>
-        <!--版块五-->
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFive">
-          <h1 class="page-header">静压式液位计</h1>
-          <div class="table-responsive">
-            <div  class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-              <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
-                <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
+      </div>
+      <!--版块五-->
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFive">
+        <h1 class="page-header">静压式液位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageFour'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
+                  </ul>
+                </li>
               </ul>
-              <div class='time_data_page time_data_pageFour'>
+              <div class='placeholder chart-data' id='data-dash-board'></div>
+            </div>
+            <div class='alarm_data_page alarm_data_pageFour'>
+              <div class="placeholder">
                 <ul class=" navbar-nav time_choose">
                   <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
@@ -286,48 +309,36 @@
                     </ul>
                   </li>
                 </ul>
-                  <div class='placeholder chart-data' id='data-dash-board'></div>
-              </div>
-              <div class='alarm_data_page alarm_data_pageFour'>
-                <div class="placeholder">
-                  <ul class=" navbar-nav time_choose">
-                    <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">3个小时内 <span class="caret"></span></a>
-                      <ul class="dropdown-menu">
-                        <li><a href="#" class='dropdown-menu-one'>12个小时内</a></li>
-                        <li><a href="#" class='dropdown-menu-two'>一天内</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>日期</th>
-                        <th>时间</th>
-                        <th>高度</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div  class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
           </div>
+          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
         </div>
       </div>
     </div>
-   
+  </div>
+
 </body>
 <script src="src/js/jquery-3.1.1.min.js"></script>
 <script src="src/js/bootstrap.min.js"></script>
 <script src="src/js/data.js"></script>
+
 </html>
