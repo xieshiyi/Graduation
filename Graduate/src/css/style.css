@@ -161,21 +161,17 @@ body {
 .pageTwo,.pageThree,.pageFour,.pageFive{
   display:none;
 }
-.email,.password{
+.email{
   width: 190px !important;
   margin-top: 20px;
   margin-bottom: 10px;
-}
-.email_bind{
-    max-width: 310px;
-    padding: 0 15px;
 }
 
 .form-control{
   display: -webkit-inline-box !important;
 }
 .btn_modify{
-  display: block;
+  display: inline-block;
 }
 .btn_bind{
   display: none;

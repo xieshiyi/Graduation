@@ -1,6 +1,10 @@
 $(function () {
+    /**
+     * socket:websocket对象，与和服务端进行通信
+     */
+    var socket = io('http://monitor.io:8080/');
+    
     //导航栏点击切换页面
-
     function changePage(num, pageName) {
         num.bind('click', function (event) {
             $('.nav_title').removeClass('active');
@@ -41,7 +45,6 @@ $(function () {
      * 管理员界面
      * 邮箱账号管理：
      * email：邮箱账号
-     * password：邮箱密码
      */
 
     function initEmail() {
@@ -51,8 +54,8 @@ $(function () {
             async: false,
             success: function (data) {
                 $('.email').val(data[0].email);
-                $('.password').val(data[0].password);
-                console.log('邮箱账号：---' + data[0].email + '邮箱密码:---' + data[0].password);
+                console.log('邮箱账号：---' + data[0].email);
+                socket.emit('emailInfo', { 'email': data[0].email });
             }
         });
     }
@@ -60,28 +63,25 @@ $(function () {
 
     $('.btn_modify').bind('click', function () {
         document.getElementsByClassName('email')[0].disabled = '';
-        document.getElementsByClassName('password')[0].disabled = '';
-        $('.btn_bind').css('display', 'block');
+        $('.btn_bind').css('display', 'inline-block');
         $('.btn_modify').css('display', 'none');
 
     });
     $('.btn_bind').bind('click', function () {
         var email = $('.email').val();
-        var password = $('.password').val();
         var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
-        console.log(email + '---' + password);
-        if (email == '' || password == '') {
-            alert('请输入绑定邮箱账号或密码!');
+        console.log(email);
+        if (email == '') {
+            alert('请输入绑定邮箱账号!');
         }
         else if (matchEmail.exec(email)) {
-            var email_posting = $.get('/api/email/updateEmail', { email: email, password: password }, function (result) {
+            var email_posting = $.get('/api/email/updateEmail', { email: email }, function (result) {
                 alert('绑定成功！');
             });
             initEmail();
             document.getElementsByClassName('email')[0].disabled = 'disabled';
-            document.getElementsByClassName('password')[0].disabled = 'disabled';
             $('.btn_bind').css('display', 'none');
-            $('.btn_modify').css('display', 'block');
+            $('.btn_modify').css('display', 'inline-block');
         }
         else {
             alert('请输入正确邮箱账号！');
@@ -99,7 +99,7 @@ $(function () {
     var dataDashBoard = echarts.init(document.getElementById('data-dash-board'));
 
 
-    var socket = io('http://monitor.io:8080/');
+
     socket.on('monitor', function (obj) {
         /** 监听后台数据变化
          * 各个仓库变化，传送变化的数据，进行处理后展示到前端

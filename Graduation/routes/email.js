@@ -41,7 +41,7 @@ router.get('/info', function (req, res, next) {
 router.get('/updateEmail', function (req, res, next) {
   var param = req.query || req.params;
   pool.getConnection(function (err, connection) {
-    connection.query('UPDATE alarm_info SET email = ?,password = ?', [param.email,param.password], function (err, result, fields) {
+    connection.query('UPDATE alarm_info SET email = ?', [param.email], function (err, result, fields) {
       if (result) {
         result = {
           code: 200,
