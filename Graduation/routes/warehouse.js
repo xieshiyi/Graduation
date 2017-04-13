@@ -27,7 +27,7 @@ router.get('/', function(req, res, next){
       var param = req.query || req.params;
       pool.getConnection(function(err, connection) {
         connection.query('SELECT * from warehouse_info', function(err, result, fields){       
-          responseJSON(res, result);  
+          responseJSON(res, result); 
           connection.release();   
     }); 
   }); 
@@ -38,7 +38,7 @@ router.get('/', function(req, res, next){
 router.get('/getWarehouseByParam', function(req, res, next){
       var param = req.query || req.params;
       pool.getConnection(function(err, connection) {
-        connection.query('SELECT * from warehouse_info where number = ? ',[param.number],function(err,result,fields){       
+        connection.query('SELECT * from warehouse_info where repo = ? ',[param.repo],function(err,result,fields){       
           responseJSON(res, result);  
           connection.release();   
     }); 

@@ -26,7 +26,7 @@ var responseJSON = function (res, ret) {
 router.get('/addUser', function(req, res, next){
       var param = req.query || req.params;
       pool.getConnection(function(err, connection) {
-        connection.query('INSERT INTO user_info SET ?',{userName:param.userName,password:param.password,flag:'0'},function(err,result){
+        connection.query('INSERT INTO user_info SET ?',{username:param.username,password:param.password,flag:'0'},function(err,result){
         if(result) {      
                 result = {   
                           code: 200,   

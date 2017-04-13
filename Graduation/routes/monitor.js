@@ -42,57 +42,55 @@ const influx = new Influx.InfluxDB({
  */
 const nodemailer = require('nodemailer');
 const fs = require('fs')
- io.on('emailInfo', function (obj) {
 
- });
-// create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
-  service: 'QQex',
+  service: 'QQ',
   auth: {
-    user: 'you@email',
-    pass: 'youpassword'
+    user: '465755864@qq.com',
+    pass: 'xxxxxxxxxxxxx'
   }
 });
 
-// setup email data with unicode symbols
-let mailOptions = {
-  from: '465755864@qq.com', // sender address
-  to: ['to@email1', 'to@email2'], // list of receivers
-  subject: 'ERROR: docker registry crontab error', // Subject line
-  text: fs.readFileSync(logfile) // plain text body
-};
+io.on('connection', function (socket) {
+  socket.on('alarm', function (obj) {
+    var email = obj.email;
+    var time = obj.time;
+    var repo = obj.repo;
+    var height = obj.height;
+    console.log('报警邮箱：' + email);
+    let mailOptions = {
+      from: '465755864@qq.com', // sender address
+      to: [email], // list of receivers
+      subject: 'ERROR: 物位计报警！', // Subject line
+      text: time + ':仓库' + repo + '---检测到物位警报，高度为：' + height // plain text body
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
 
-// send mail with defined transport object
-transporter.sendMail(mailOptions, (error, info) => {
-  if (error) {
-    return console.log(error);
-  }
-  console.log('Message %s sent: %s', info.messageId, info.response);
+  });
 });
+
 /**
  * 插入数据
  */
 router.get('/insert', function (req, res, next) {
-  let count = 10;
-  while (count--) {
-    for (let i = 1; i < 5; i++) {
-      let h = Math.random() * 10;
-      influx.writePoints([
-        {
-          measurement: 'monitor',
-          tags: { number: i },
-          fields: { height: h },
-        }
-      ]).then(() => {
-        
-        io.emit('monitor', { 'number': i, 'height': h });
-        res.send(200);
-      });
-
-
-    }
+  for (let i = 1; i < 5; i++) {
+    let h = Math.random() * 10;
+    influx.writePoints([
+      {
+        measurement: 'monitor',
+        tags: { number: i },
+        fields: { height: h },
+      }
+    ]).then(() => {
+      io.emit('monitor', { 'number': i, 'height': h });
+      res.send(200);
+    });
   }
-
 });
 /* GET users listing. */
 /**
@@ -109,7 +107,7 @@ router.get('/repo', function (req, res, next) {
 router.get('/repo/select', function (req, res, next) {
   var param = req.query || req.params;
   return influx.query(` 
-  select * from monitor where number = '${param.repo}' and time >= now() - ${param.hours}h
+  select * from monitor where number = '${param.repo}' and time >= now() - ${param.minutes}m
   `).then(rows => res.json(rows));
 });
 

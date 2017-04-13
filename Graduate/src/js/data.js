@@ -3,7 +3,7 @@ $(function () {
      * socket:websocket对象，与和服务端进行通信
      */
     var socket = io('http://monitor.io:8080/');
-    
+
     //导航栏点击切换页面
     function changePage(num, pageName) {
         num.bind('click', function (event) {
@@ -55,7 +55,7 @@ $(function () {
             success: function (data) {
                 $('.email').val(data[0].email);
                 console.log('邮箱账号：---' + data[0].email);
-                socket.emit('emailInfo', { 'email': data[0].email });
+                // socket.emit('emailInfo', { 'email': data[0].email });
             }
         });
     }
@@ -99,7 +99,36 @@ $(function () {
     var dataDashBoard = echarts.init(document.getElementById('data-dash-board'));
 
 
-
+    /**
+     * 查询仓库信息
+     */
+    function getwarehouse(repo) {
+        var result = [];
+        $.ajax({
+            type: "get",
+            url: "/api/warehouse/getWarehouseByParam?repo=" + repo + "",
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+    }
+    /**
+     * 插入报警信息
+     */
+    function insertWarning(repo, time, height) {
+        var result = [];
+        $.ajax({
+            type: "get",
+            url: "/api/email/insertWarning?repo=" + repo + "&time=" + time + "&height=" + height,
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+    }
     socket.on('monitor', function (obj) {
         /** 监听后台数据变化
          * 各个仓库变化，传送变化的数据，进行处理后展示到前端
@@ -114,8 +143,13 @@ $(function () {
                     option.xAxis.data.shift();
                     option.xAxis.data.push(axisData);
                     lineChart.setOption(option);
-
-                    console.log('1号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                    var repoInfo = getwarehouse(1);
+                    if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
+                        var emailAccount = $('.email').val();
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '1', 'height': (responseTxt[0].height).toFixed(2) });
+                        console.log('仓库1插入报警信息！');
+                        insertWarning('1', new Date(responseTxt[0].time), responseTxt[0].height);
+                    }
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -131,8 +165,13 @@ $(function () {
                     optionBar.xAxis.data.shift();
                     optionBar.xAxis.data.push(axisData);
                     barChart.setOption(optionBar);
-
-                    console.log('2号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                    var repoInfo = getwarehouse(2);
+                    if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
+                        var emailAccount = $('.email').val();
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '2', 'height': (responseTxt[0].height).toFixed(2) });
+                        console.log('仓库2插入报警信息！');
+                        insertWarning('2', new Date(responseTxt[0].time), responseTxt[0].height);
+                    }
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -144,8 +183,13 @@ $(function () {
                     var newdataRadar = (responseTxt[0].height.toFixed(2)) / 10;
                     optionRadar.series[0].data = [newdataRadar, newdataRadar - 0.1, newdataRadar - 0.2, newdataRadar - 0.3];
                     radarChart.setOption(optionRadar);
-                    console.log('新水球数据：' + newdataRadar);
-                    console.log('3号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                    var repoInfo = getwarehouse(3);
+                    if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
+                        var emailAccount = $('.email').val();
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '3', 'height': (responseTxt[0].height).toFixed(2) });
+                        console.log('仓库3插入报警信息！');
+                        insertWarning('3', new Date(responseTxt[0].time), responseTxt[0].height);
+                    }
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -159,8 +203,13 @@ $(function () {
                     optionBoard.series[0].axisLine.lineStyle.color[0][0] = (newdataBoard / 100).toFixed(2);
                     optionBoard.series[0].axisLine.lineStyle.color[0][1] = detectionData(newdataBoard);
                     dashBoard.setOption(optionBoard);
-                    console.log('新仪表盘数据：' + newdataBoard);
-                    console.log('4号仓库---' + new Date(responseTxt[0].time) + '---' + responseTxt[0].height);
+                    var repoInfo = getwarehouse(4);
+                    if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
+                        var emailAccount = $('.email').val();
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '4', 'height': (responseTxt[0].height).toFixed(2) });
+                        console.log('仓库4插入报警信息！');
+                        insertWarning('4', new Date(responseTxt[0].time), responseTxt[0].height);
+                    }
                 }
                 if (statusTxt == "error")
                     console.log("Error: " + xhr.status + ": " + xhr.statusText);
@@ -196,8 +245,6 @@ $(function () {
 
             dataLine = res;
             xAxisDataLine = xLine;
-            console.log('折线图X轴初始化：:---' + xAxisDataLine);
-            console.log('折线图数据初始化:---' + dataLine);
         }
     });
     option = {
@@ -279,8 +326,6 @@ $(function () {
 
             dataBar = res;
             xAxisDataBar = xBar;
-            console.log('柱状图X轴初始化:---' + xAxisDataBar);
-            console.log('柱状图数据初始化:---' + dataBar);
         }
     });
     optionBar = {
@@ -340,7 +385,6 @@ $(function () {
                 dataRadar.push((data[0].height.toFixed(2)) / 10 - len / 10);
                 len++;
             }
-            console.log('水球图:---' + dataRadar);
         }
     });
 
@@ -361,8 +405,6 @@ $(function () {
         async: false,
         success: function (data) {
             dataBoard = (data[0].height * 10).toFixed(2);
-
-            console.log('仪表盘:---' + dataBoard);
         }
     });
     function detectionData(str) {
@@ -435,12 +477,12 @@ $(function () {
      * 時間段監控 图表
      * 仓库1:optionSelect1
      */
-    function initData(repo, hours) {
+    function initData(repo, minutes) {
         var xRepo = [];
         var dataRepo = [];
         $.ajax({
             type: "get",
-            url: "/api/monitor/repo/select?repo=" + repo + "&hours=" + hours + "",
+            url: "/api/monitor/repo/select?repo=" + repo + "&minutes=" + minutes + "",
             async: false,
             success: function (data) {
                 var res = [];
@@ -459,11 +501,10 @@ $(function () {
         return result;
     }
 
-    var result1 = initData(1, 3);
-    console.log(result1)
-    var result2 = initData(2, 3);
-    var result3 = initData(3, 3);
-    var result4 = initData(4, 3);
+    var result1 = initData(1, 5);
+    var result2 = initData(2, 5);
+    var result3 = initData(3, 5);
+    var result4 = initData(4, 5);
     optionSelect1 = {
         title: {
             text: '时间段高度',
@@ -682,7 +723,7 @@ $(function () {
      * 时间段筛选
      */
     function chooseTimeData(pageName, menuName, repo, option, chart) {
-        var h = 0;
+        var m = 0;
         pageName.find(menuName).bind('click', function () {
             let dropdowMenu = this.text;
             this.text = pageName.find('.dropdown-toggle').text();
@@ -691,22 +732,57 @@ $(function () {
             // if (dropdowMenu === '3个小时内') {
             //     h = 3;
             // }
-            if (dropdowMenu === '12个小时内') {
-                h = 12;
+            if (dropdowMenu === '30分钟内') {
+                m = 30;
             }
-            else if (dropdowMenu === '一天内') {
-                h = 24;
+            else if (dropdowMenu === '1小时内') {
+                m = 60;
             }
             else {
-                h = 3;
+                m = 5;
             }
-            console.log(h);
-            var result = initData(repo, h);
+            console.log(m);
+            var result = initData(repo, m);
             option.xAxis.data = result.time;
             option.series[0].data = result.height;
             chart.setOption(option);
         });
     }
+    /**
+     * 报警详情查询
+     * 仓库1:optionSelect1
+     */
+    function initAlarm(repo, minutes) {
+        // var xRepo = [];
+        // var dataRepo = [];
+        $.ajax({
+            type: "get",
+            url: "/api/email/getAlarmByParam?repo=" + repo + "&hours=" + minutes + "",
+            async: false,
+            success: function (data) {
+                // var res = [];
+                // var xData = [];
+                // var len = 0;
+                // while (len < data.length) {
+                //     res.unshift((data[len].height).toFixed(2));
+                //     xData.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                //     len++;
+                // }
+                // xRepo = xData;
+                // dataRepo = res;
+                data.forEach(function (element) {
+
+                }, this);
+            }
+        });
+        var result = { time: xRepo, height: dataRepo };
+        return result;
+    }
+
+    var result1 = initData(1, 5);
+    var result2 = initData(2, 5);
+    var result3 = initData(3, 5);
+    var result4 = initData(4, 5);
     /**
      * 报警详情查询
      */

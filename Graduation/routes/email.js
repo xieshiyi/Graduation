@@ -53,5 +53,36 @@ router.get('/updateEmail', function (req, res, next) {
     });
   });
 });
+/**
+ * 插入报警数据
+ */
+router.get('/insertWarning', function (req, res, next) {
+  var param = req.query || req.params;
+  pool.getConnection(function (err, connection) {
+    connection.query('INSERT INTO warning SET ?',{repo:param.repo,time:param.time,height:param.height}, function (err, result, fields) {
+      if (result) {
+        result = {
+          code: 200,
+          msg: '插入成功'
+        };
+      }
+      responseJSON(res, result);
+      connection.release();
+    });
+  });
+});
+
+/**
+ * 查询报警数据
+ */
+router.get('/getAlarmByParam', function(req, res, next){
+      var param = req.query || req.params;
+      pool.getConnection(function(err, connection) {
+        connection.query('SELECT * from warning where repo = ? and time >= now() - ? m',[param.repo,param.minutes],function(err,result,fields){       
+          responseJSON(res, result);  
+          connection.release();   
+    }); 
+  }); 
+ });
 
 module.exports = router;
