@@ -47,7 +47,7 @@ let transporter = nodemailer.createTransport({
   service: 'QQ',
   auth: {
     user: '465755864@qq.com',
-    pass: 'xxxxxxxxxxxxx'
+    pass: 'lyieunqavjnjbjhe'
   }
 });
 
@@ -87,7 +87,7 @@ router.get('/insert', function (req, res, next) {
         fields: { height: h },
       }
     ]).then(() => {
-      io.emit('monitor', { 'number': i, 'height': h });
+      io.emit('monitor', { 'number': i, 'height': h});
       res.send(200);
     });
   }

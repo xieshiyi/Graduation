@@ -4,6 +4,26 @@ $(function () {
      */
     var socket = io('http://monitor.io:8080/');
 
+/**
+ * 对Date的扩展，将 Date 转化为指定格式的String
+ * 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+ *年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+ */
+Date.prototype.Format = function (fmt) {  
+    var o = {
+        "M+": this.getMonth() + 1, //月份 
+        "d+": this.getDate(), //日 
+        "h+": this.getHours(), //小时 
+        "m+": this.getMinutes(), //分 
+        "s+": this.getSeconds(), //秒 
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+        "S": this.getMilliseconds() //毫秒 
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
     //导航栏点击切换页面
     function changePage(num, pageName) {
         num.bind('click', function (event) {
@@ -136,7 +156,7 @@ $(function () {
         if (obj.number == '1') {
             $.get('/api/monitor/repo?repo=1&number=1', function (responseTxt, statusTxt, xhr) {
                 if (statusTxt == "success") {
-                    var axisData = new Date(responseTxt[0].time).toLocaleTimeString().replace(/^\D*/, '');
+                    var axisData = new Date(responseTxt[0].time).Format("hh:mm:ss");
                     var data = option.series[0].data;
                     data.shift();
                     data.push((responseTxt[0].height).toFixed(2));
@@ -146,9 +166,9 @@ $(function () {
                     var repoInfo = getwarehouse(1);
                     if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
                         var emailAccount = $('.email').val();
-                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '1', 'height': (responseTxt[0].height).toFixed(2) });
-                        console.log('仓库1插入报警信息！');
-                        insertWarning('1', new Date(responseTxt[0].time), responseTxt[0].height);
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).Format("yyyy-MM-dd hh:mm:ss"), 'repo': '1', 'height': (responseTxt[0].height).toFixed(2) });
+                        console.log('仓库1插入报警信息！时间为：' + responseTxt[0].time);
+                        insertWarning('1', responseTxt[0].time, (responseTxt[0].height).toFixed(2));
                     }
                 }
                 if (statusTxt == "error")
@@ -168,9 +188,9 @@ $(function () {
                     var repoInfo = getwarehouse(2);
                     if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
                         var emailAccount = $('.email').val();
-                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '2', 'height': (responseTxt[0].height).toFixed(2) });
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).Format("yyyy-MM-dd hh:mm:ss"), 'repo': '2', 'height': (responseTxt[0].height).toFixed(2) });
                         console.log('仓库2插入报警信息！');
-                        insertWarning('2', new Date(responseTxt[0].time), responseTxt[0].height);
+                        insertWarning('2', responseTxt[0].time, (responseTxt[0].height).toFixed(2));
                     }
                 }
                 if (statusTxt == "error")
@@ -186,9 +206,9 @@ $(function () {
                     var repoInfo = getwarehouse(3);
                     if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
                         var emailAccount = $('.email').val();
-                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '3', 'height': (responseTxt[0].height).toFixed(2) });
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).Format("yyyy-MM-dd hh:mm:ss"), 'repo': '3', 'height': (responseTxt[0].height).toFixed(2) });
                         console.log('仓库3插入报警信息！');
-                        insertWarning('3', new Date(responseTxt[0].time), responseTxt[0].height);
+                        insertWarning('3', responseTxt[0].time, (responseTxt[0].height).toFixed(2));
                     }
                 }
                 if (statusTxt == "error")
@@ -206,9 +226,9 @@ $(function () {
                     var repoInfo = getwarehouse(4);
                     if (responseTxt[0].height > repoInfo[0].limit_upper || responseTxt[0].height < repoInfo[0].limit_lower) {
                         var emailAccount = $('.email').val();
-                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).toLocaleTimeString(), 'repo': '4', 'height': (responseTxt[0].height).toFixed(2) });
+                        socket.emit('alarm', { 'email': emailAccount, 'time': new Date(responseTxt[0].time).Format("yyyy-MM-dd hh:mm:ss"), 'repo': '4', 'height': (responseTxt[0].height).toFixed(2) });
                         console.log('仓库4插入报警信息！');
-                        insertWarning('4', new Date(responseTxt[0].time), responseTxt[0].height);
+                        insertWarning('4', responseTxt[0].time, (responseTxt[0].height).toFixed(2));
                     }
                 }
                 if (statusTxt == "error")
@@ -239,7 +259,7 @@ $(function () {
             var len = 0;
             while (len < 10) {
                 res.unshift((data[len].height).toFixed(2));
-                xLine.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                xLine.unshift(new Date(data[len].time).Format("hh:mm:ss"));
                 len++;
             }
 
@@ -320,7 +340,7 @@ $(function () {
             var len = 0;
             while (len < 10) {
                 res.unshift((data[len].height).toFixed(2));
-                xBar.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                xBar.unshift(new Date(data[len].time).Format("hh:mm:ss"));
                 len++;
             }
 
@@ -490,7 +510,7 @@ $(function () {
                 var len = 0;
                 while (len < data.length) {
                     res.unshift((data[len].height).toFixed(2));
-                    xData.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
+                    xData.unshift(new Date(data[len].time).Format("hh:mm:ss"));
                     len++;
                 }
                 xRepo = xData;
@@ -500,7 +520,13 @@ $(function () {
         var result = { time: xRepo, height: dataRepo };
         return result;
     }
-
+    /**
+ * 时间段监控图表数据初始化
+ * result1:时间段 图表1
+ * result2:时间段 图表2
+ * result3:时间段 图表3
+ * result4:时间段 图表4 
+ */
     var result1 = initData(1, 5);
     var result2 = initData(2, 5);
     var result3 = initData(3, 5);
@@ -729,9 +755,6 @@ $(function () {
             this.text = pageName.find('.dropdown-toggle').text();
             pageName.find(' .dropdown-toggle').html(dropdowMenu + '<span class="caret"></span>');
             console.log(dropdowMenu);
-            // if (dropdowMenu === '3个小时内') {
-            //     h = 3;
-            // }
             if (dropdowMenu === '30分钟内') {
                 m = 30;
             }
@@ -749,67 +772,90 @@ $(function () {
         });
     }
     /**
-     * 报警详情查询
-     * 仓库1:optionSelect1
+     * 报警详情查询初始化查询
+     * repo：仓库
+     * minutes：时间段内
+     * alarm1: 仓库1报警详情
+     * alarm2：仓库2报警详情
+     * alarm3：仓库3报警详情
+     * alarm4：仓库4报警详情
      */
     function initAlarm(repo, minutes) {
-        // var xRepo = [];
-        // var dataRepo = [];
+        var result = [];
         $.ajax({
             type: "get",
-            url: "/api/email/getAlarmByParam?repo=" + repo + "&hours=" + minutes + "",
+            url: "/api/email/getAlarmByParam?repo=" + repo + "&minutes=" + minutes + "",
             async: false,
             success: function (data) {
-                // var res = [];
-                // var xData = [];
-                // var len = 0;
-                // while (len < data.length) {
-                //     res.unshift((data[len].height).toFixed(2));
-                //     xData.unshift(new Date(data[len].time).toLocaleTimeString().replace(/^\D*/, ''));
-                //     len++;
-                // }
-                // xRepo = xData;
-                // dataRepo = res;
-                data.forEach(function (element) {
-
-                }, this);
+                result = data;
             }
         });
-        var result = { time: xRepo, height: dataRepo };
         return result;
     }
-
-    var result1 = initData(1, 5);
-    var result2 = initData(2, 5);
-    var result3 = initData(3, 5);
-    var result4 = initData(4, 5);
+    function insertToTable(data, table) {
+        var row = table.find('tbody');
+        row.find('tr').remove();
+        if (data[0] == undefined) {
+            row.append('<tr><td>-</td><td>-</td><td>-</td><td>-</tr>');
+        }
+        $.each(data, function (i, n) {
+            console.log(n)
+            row.append('<tr><td>' + (i + 1) + '</td><td>' + new Date(n.time).Format("yyyy-MM-dd") + '</td><td>' + new Date(n.time).Format("hh:mm:ss") + '</td><td>' + n.height + '</tr>');
+        });
+    }
+    var alarm1 = initAlarm(1, 5);
+    var alarm2 = initAlarm(2, 5);
+    var alarm3 = initAlarm(3, 5);
+    var alarm4 = initAlarm(4, 5);
+    insertToTable(alarm1, $('.table_one'));
+    insertToTable(alarm2, $('.table_two'));
+    insertToTable(alarm3, $('.table_three'));
+    insertToTable(alarm4, $('.table_four'));
     /**
      * 报警详情查询
      */
-    function chooseTime() {
-
+    function chooseAlarmData(pageName, menuName, repo, table) {
+        var m = 0;
+        pageName.find(menuName).bind('click', function () {
+            let dropdowMenu = this.text;
+            this.text = pageName.find('.dropdown-toggle').text();
+            pageName.find(' .dropdown-toggle').html(dropdowMenu + '<span class="caret"></span>');
+            console.log(dropdowMenu);
+            if (dropdowMenu === '30分钟内') {
+                m = 30;
+            }
+            else if (dropdowMenu === '1小时内') {
+                m = 60;
+            }
+            else {
+                m = 5;
+            }
+            console.log(m);
+            var result = initAlarm(repo, m);
+            insertToTable(result, table);
+        });
     }
 
     //页面一
     chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-one', '1', optionSelect1, dataLineChart);
     chooseTimeData($('.time_data_pageOne'), '.dropdown-menu-two', '1', optionSelect1, dataLineChart);
-    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageOne'), '.dropdown-menu-two');
+    chooseAlarmData($('.alarm_data_pageOne'), '.dropdown-menu-one', '1', $('.table_one'));
+    chooseAlarmData($('.alarm_data_pageOne'), '.dropdown-menu-two', '1', $('.table_one'));
     //页面二
     chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-one', '2', optionSelect2, dataBarChart);
     chooseTimeData($('.time_data_pageTwo'), '.dropdown-menu-two', '2', optionSelect2, dataBarChart);
-    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageTwo'), '.dropdown-menu-two');
+    chooseAlarmData($('.alarm_data_pageTwo'), '.dropdown-menu-one', '2', $('.table_two'));
+    chooseAlarmData($('.alarm_data_pageTwo'), '.dropdown-menu-two', '2', $('.table_two'));
     //页面三
     chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-one', '3', optionSelect3, dataRadarChart);
     chooseTimeData($('.time_data_pageThree'), '.dropdown-menu-two', '3', optionSelect3, dataRadarChart);
-    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageThree'), '.dropdown-menu-two');
+    chooseAlarmData($('.alarm_data_pageThree'), '.dropdown-menu-one', '3', $('.table_three'));
+    chooseAlarmData($('.alarm_data_pageThree'), '.dropdown-menu-two', '3', $('.table_three'));
     //页面四
     chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-one', '4', optionSelect4, dataDashBoard);
     chooseTimeData($('.time_data_pageFour'), '.dropdown-menu-two', '4', optionSelect4, dataDashBoard);
-    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-one');
-    chooseTime($('.alarm_data_pageFour'), '.dropdown-menu-two');
+    chooseAlarmData($('.alarm_data_pageFour'), '.dropdown-menu-one', '4', $('.table_four'));
+    chooseAlarmData($('.alarm_data_pageFour'), '.dropdown-menu-two', '4', $('.table_four'));
 
     // 使用刚指定的配置项和数据显示图表。
 

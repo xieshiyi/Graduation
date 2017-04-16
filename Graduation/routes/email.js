@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var dateFormat = require('dateFormat');
 /**
  * 导入MYSQL模块
  */
@@ -58,8 +59,9 @@ router.get('/updateEmail', function (req, res, next) {
  */
 router.get('/insertWarning', function (req, res, next) {
   var param = req.query || req.params;
+  var time = dateFormat(param.time, 'yyyy-mm-dd HH:MM:ss');
   pool.getConnection(function (err, connection) {
-    connection.query('INSERT INTO warning SET ?',{repo:param.repo,time:param.time,height:param.height}, function (err, result, fields) {
+    connection.query('INSERT INTO warning SET ?', { repo: param.repo, time: time, height: param.height }, function (err, result, fields) {
       if (result) {
         result = {
           code: 200,
@@ -74,15 +76,15 @@ router.get('/insertWarning', function (req, res, next) {
 
 /**
  * 查询报警数据
- */
-router.get('/getAlarmByParam', function(req, res, next){
-      var param = req.query || req.params;
-      pool.getConnection(function(err, connection) {
-        connection.query('SELECT * from warning where repo = ? and time >= now() - ? m',[param.repo,param.minutes],function(err,result,fields){       
-          responseJSON(res, result);  
-          connection.release();   
-    }); 
-  }); 
- });
+ */                                 
+router.get('/getAlarmByParam', function (req, res, next) {
+  var param = req.query || req.params;
+  pool.getConnection(function (err, connection) {
+    connection.query('SELECT * FROM warning WHERE repo = ? and time >= now()-INTERVAL ? MINUTE', [param.repo, param.minutes], function (err, result, fields) {
+      responseJSON(res, result);
+      connection.release();
+    });
+  });
+});
 
 module.exports = router;
