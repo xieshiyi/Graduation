@@ -9,9 +9,14 @@ body {
   padding: 15px;
   margin: 0 auto;
 }
-.form-signin .form-signin-heading,
+.form-signin .form-signin-heading{
+   margin-bottom: 30px;
+   text-align: center;
+   color: #555;
+}
 .form-signin .checkbox {
-  margin-bottom: 10px;
+     margin-bottom: 10px;
+     color: #555;
 }
 .form-signin .checkbox {
   font-weight: normal;
@@ -78,12 +83,35 @@ html.no-touchevents .index-tab-navs a:hover {
     -webkit-transition: left .15s ease-in;
     transition: left .15s ease-in;
 }
-a {
-    color: #555 !important;
+.navs-slider a {
+    color: #555;
+    text-decoration: none!important;
 }
-a:hover {
-    text-decoration: underline;
+
+
+.index-tab-navs .navs-slider[data-active-index="1"] .navs-slider-bar {
+    left: 4em;
 }
-a {
-    text-decoration: none;
+
+.index-tab-navs .navs-slider .navs-slider-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: 0 .8em;
+    width: 2.4em;
+    height: 2px;
+    background: #0f88eb;
+    -webkit-transition: left .15s ease-in;
+    transition: left .15s ease-in;
+}
+.index-tab-navs {
+    margin-bottom: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+.view-signin{
+  display: none;
+}
+.view-signup{
+  display: block;
 }

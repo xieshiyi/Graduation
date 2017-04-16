@@ -1,0 +1,16 @@
+$(function(){
+    $('[href="#signup"]').bind('click',function(){
+        $('.navs-slider').attr('data-active-index',0);
+        $('a').removeClass('active');
+        $('[href="#signup"]').addClass('active');
+        $('.view-signin').css('display','none');
+        $('.view-signup').css('display','block');
+    });
+    $('[href="#signin"]').bind('click',function(){
+         $('.navs-slider').attr('data-active-index',1);
+         $('a').removeClass('active');
+         $('[href="#signin"]').addClass('active');
+         $('.view-signin').css('display','block');
+        $('.view-signup').css('display','none');
+    });
+});

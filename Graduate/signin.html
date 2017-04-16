@@ -6,27 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
-
+    <meta name="description" content="物位计监控系统">
+    <meta name="author" content="xieshiyi">
     <title>物位计监控系统</title>
-
     <!-- Bootstrap core CSS -->
     <link href="src/css/bootstrap.min.css" rel="stylesheet">
     <link href="src/css/bootstrap.css.map" rel="stylesheet">
     <link href="src/css/bootstrap.min.css.map" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="src/css/signin.css" rel="stylesheet">
-
 </head>
-
 <body>
-
     <div class="container">
         <form class="form-signin">
             <h2 class="form-signin-heading">物位计监控系统</h2>
-
             <div class="index-tab-navs">
                 <div class="navs-slider" data-active-index="0">
                     <a href="#signup" class="active">注册</a>
@@ -34,24 +27,31 @@
                     <span class="navs-slider-bar"></span>
                 </div>
             </div>
-
-            <label for="inputEmail" class="sr-only">邮箱账号</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="邮箱账号" required autofocus>
-            <label for="inputPassword" class="sr-only">密码</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-            <div class="checkbox">
-                <label>
-            <input type="checkbox" value="remember-me"> 记住密码
-          </label>
+            <div class="view view-signup">
+                <label for="inputEmail" class="sr-only">邮箱账号</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="邮箱账号" required autofocus>
+                <label for="inputPassword" class="sr-only">密码</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+            <div class="view view-signin">
+                <label for="inputEmail" class="sr-only">邮箱账号</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="邮箱账号" required autofocus>
+                <label for="inputPassword" class="sr-only">密码</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 记住密码
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+            </div>
         </form>
     </div>
     <!-- /container -->
-
-
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="src/js/jquery-3.1.1.min.js"></script>
+    <script src="src/js/bootstrap.min.js"></script>
     <script src="src/js/signin.js"></script>
 </body>
 
