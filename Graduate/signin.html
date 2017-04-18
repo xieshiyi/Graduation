@@ -16,9 +16,10 @@
     <!-- Custom styles for this template -->
     <link href="src/css/signin.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
-        <form class="form-signin">
+        <div class="form-signin">
             <h2 class="form-signin-heading">物位计监控系统</h2>
             <div class="index-tab-navs">
                 <div class="navs-slider" data-active-index="0">
@@ -27,26 +28,30 @@
                     <span class="navs-slider-bar"></span>
                 </div>
             </div>
-            <div class="view view-signup">
-                <label for="inputEmail" class="sr-only">邮箱账号</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="邮箱账号" required autofocus>
-                <label for="inputPassword" class="sr-only">密码</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
-            </div>
-            <div class="view view-signin">
-                <label for="inputEmail" class="sr-only">邮箱账号</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="邮箱账号" required autofocus>
-                <label for="inputPassword" class="sr-only">密码</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="remember-me"> 记住密码
-                    </label>
+            <form id="form_signup" method="get" > 
+                <div class="view view-signup">
+                    <label for="inputEmail" class="sr-only">邮箱账号</label>
+                    <input type="email" id="inputEmailup" class="form-control" placeholder="邮箱账号" required autofocus>
+                    <label for="inputPassword" class="sr-only">密码(不少于6位)</label>
+                    <input type="password" id="inputPasswordup" class="form-control" placeholder="密码" required>
+                    <button class="btn btn-lg btn-primary btn-block btn_signup" type="submit" onclick="checkSignupForm()">注册</button>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
-            </div>
-        </form>
+            </form>
+            <form id="form_signin" method="get" >
+                <div class="view view-signin">
+                    <label for="inputEmail" class="sr-only">邮箱账号</label>
+                    <input type="email" id="inputEmailin" class="form-control" placeholder="邮箱账号" required autofocus>
+                    <label for="inputPassword" class="sr-only">密码(不少于6位)</label>
+                    <input type="password" id="inputPasswordin" class="form-control" placeholder="密码" required>
+                    <div class="checkbox">
+                        <label>
+                        <input type="checkbox" value="remember-me" class="remember-me"> 记住密码
+                    </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block btn_signin"  onclick="checkSigninForm()">登录</button>
+                </div>
+            </form>
+        </div>
     </div>
     <!-- /container -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
