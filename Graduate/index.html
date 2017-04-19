@@ -20,7 +20,15 @@
 
   <!-- 引入 echarts.js -->
 
+  <script>
+    if (sessionStorage.getItem('user') == null) {
+      window.location.href = "/signin.html";
+    }
+    // 普通用户登录,隐藏管理信息页面
+    if(localStorage.getItem('flag')==1){
 
+    }
+  </script>
   <script src="src/js/echarts.js"></script>
   <script src="src/js/echarts-liquidfill.js"></script>
   <script src="src/js/socket.io.min.js"></script>
@@ -92,10 +100,10 @@
           </div>
         </div>
         <h2 class="sub-header">报警提示邮箱</h2><br />
-          <h2 class="text-muted" style="float: left;">账号：</h2>
-          <input type="text" class="form-control email" placeholder="请输入正确邮箱格式"  disabled="disabled">
-          <button type="submit" class="btn btn-primary  btn_modify" >修改</button>
-          <button type="submit" class="btn btn-primary  btn_bind" style="margin-top:0">绑定</button>
+        <h2 class="text-muted" style="float: left;">账号：</h2>
+        <input type="text" class="form-control email" placeholder="请输入正确邮箱格式" disabled="disabled">
+        <button type="submit" class="btn btn-primary  btn_modify">修改</button>
+        <button type="submit" class="btn btn-primary  btn_bind" style="margin-top:0">绑定</button>
 
 
       </div>

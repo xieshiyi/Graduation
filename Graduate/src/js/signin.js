@@ -17,6 +17,16 @@ $(function () {
 
 
 });
+/**
+ * 登录版块滑动
+ */
+function signinBlock() {
+    $('.navs-slider').attr('data-active-index', 1);
+    $('a').removeClass('active');
+    $('[href="#signin"]').addClass('active');
+    $('.view-signin').css('display', 'block');
+    $('.view-signup').css('display', 'none');
+}
 var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
 function checkSignupForm() {
     var email = $('#inputEmailup').val();
@@ -42,14 +52,10 @@ function checkSignupForm() {
                         async: false,
                         success: function (data) {
                             if (data.code == 200) {
-                                alert('注册成功！请登录！');
+                                alert('注册成功！请通知管理员审核！');
                                 $('#inputEmailup').val('');
                                 $('#inputPasswordup').val('');
-                                $('.navs-slider').attr('data-active-index', 1);
-                                $('a').removeClass('active');
-                                $('[href="#signin"]').addClass('active');
-                                $('.view-signin').css('display', 'block');
-                                $('.view-signup').css('display', 'none');
+                                signinBlock();
                             }
                             else {
                                 alert('注册失败！');
@@ -62,11 +68,7 @@ function checkSignupForm() {
                 else {
                     $('#inputEmailup').val('');
                     $('#inputPasswordup').val('');
-                    $('.navs-slider').attr('data-active-index', 1);
-                    $('a').removeClass('active');
-                    $('[href="#signin"]').addClass('active');
-                    $('.view-signin').css('display', 'block');
-                    $('.view-signup').css('display', 'none');
+                    signinBlock();
                     alert("该邮箱已经注册，请直接登录！");
                 }
             }
@@ -87,18 +89,31 @@ function checkSigninForm() {
             async: false,
             success: function (data) {
                 if (data.length != 0) {
-                    if (data[0].password == password) {
+                    if (data[0].flag == 0) {
+                        signinBlock();
                         $('#inputEmailin').val('');
                         $('#inputPasswordin').val('');
-                        alert("登录成功!");
-                        window.location.href="../index.html";
+                        alert("该账户还未审核通过，请通知管理员!");
                     }
                     else {
-                        $('#inputPasswordin').val('');
-                        alert("密码错误!");
+                        if (data[0].password == password) {
+                            $('#inputEmailin').val('');
+                            $('#inputPasswordin').val('');
+                            alert("登录成功!");
+                            sessionStorage.removeitem('user')
+                            sessionStorage.setItem('user', email)
+                            localStorage.setItem('flag',data[0].flag);
+                            window.location.href = "/index.html";
+                        }
+                        else {
+                            signinBlock();
+                            $('#inputPasswordin').val('');
+                            alert("密码错误!");
+                        }
                     }
                 }
                 else {
+                    signinBlock();
                     $('#inputEmailin').val('');
                     $('#inputPasswordin').val('');
                     alert("该邮箱未注册!");
