@@ -24,10 +24,6 @@
     if (sessionStorage.getItem('user') == null) {
       window.location.href = "/signin.html";
     }
-    // 普通用户登录,隐藏管理信息页面
-    if(localStorage.getItem('flag')==1){
-
-    }
   </script>
   <script src="src/js/echarts.js"></script>
   <script src="src/js/echarts-liquidfill.js"></script>
@@ -65,8 +61,8 @@
       <div class="col-sm-3 col-md-2 sidebar">
         <div class="fan">
           <ul class="nav nav-sidebar">
-            <li class="nav_title one active"><a href="#">物位计 <span class="sr-only">(current)</span></a></li>
-            <li class="nav_title two"><a href="#">超声波</a></li>
+            <li class="nav_title one active admin"><a href="#">设置<span class="sr-only">(current)</span></a></li>
+            <li class="nav_title two user"><a href="#">超声波</a></li>
             <li class="nav_title three"><a href="#">电容式</a></li>
             <li class="nav_title four"><a href="#">微波雷达</a></li>
             <li class="nav_title five"><a href="#">静压式</a></li>
@@ -74,9 +70,8 @@
         </div>
       </div>
       <!--版块一-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne admin">
         <h1 class="page-header">物位计</h1>
-
         <div class="row placeholders">
           <div class="col-xs-6 col-sm-3 placeholder">
             <img src="../image/1.png" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
@@ -99,16 +94,145 @@
               <span class="text-muted">Something else</span>-->
           </div>
         </div>
-        <h2 class="sub-header">报警提示邮箱</h2><br />
-        <h2 class="text-muted" style="float: left;">账号：</h2>
-        <input type="text" class="form-control email" placeholder="请输入正确邮箱格式" disabled="disabled">
-        <button type="submit" class="btn btn-primary  btn_modify">修改</button>
-        <button type="submit" class="btn btn-primary  btn_bind" style="margin-top:0">绑定</button>
-
-
+        <div class="handler">
+          <h2 class="sub-header">报警提示邮箱</h2><br />
+          <h2 class="text-muted" style="float: left;">账号：</h2>
+          <input type="email" class="form-control email" placeholder="请输入正确邮箱格式" disabled="disabled">
+          <button type="submit" class="btn btn-primary  btn_modify">修改</button>
+          <button type="submit" class="btn btn-primary  btn_bind" style="margin-top:0">绑定</button>
+        </div>
+        <div class="handler">
+          <h2 class="sub-header">物料仓库名册</h2><br />
+          <div class="row">
+            <div class="col-md-6">
+              <div class="panel panel-warning">
+                <div class="panel-heading">
+                  <h3 class="panel-title">1号仓库</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <h5 style="float: left;">高度：</h5>
+                    <input type="number" class="form-control input_repo1 height_repo1" placeholder="仓库高度" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">直径：</h5>
+                    <input type="number" class="form-control input_repo1 d_repo1" placeholder="仓库直径" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位上限：</h5>
+                    <input type="number" class="form-control input_repo1 limitUpper_repo1" placeholder="物位上限" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位下限：</h5>
+                    <input type="number" class="form-control input_repo1 limitLower_repo1" placeholder="物位下限" disabled="disabled">
+                  </div>
+                  <button type="submit" class="btn btn-warning  btnRepo_modify btnRepo_modify1">修改</button>
+                  <button type="submit" class="btn btn-warning  btnRepo_bind btnRepo_bind1">确定</button>
+                </div>
+              </div>
+              <div class="panel panel-danger">
+                <div class="panel-heading">
+                  <h3 class="panel-title">2号仓库</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <h5 style="float: left;">高度：</h5>
+                    <input type="number" class="form-control input_repo2 height_repo2" placeholder="仓库高度" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">直径：</h5>
+                    <input type="number" class="form-control input_repo2 d_repo2" placeholder="仓库直径" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位上限：</h5>
+                    <input type="number" class="form-control input_repo2 limitUpper_repo2" placeholder="物位上限" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位下限：</h5>
+                    <input type="number" class="form-control input_repo2 limitLower_repo2" placeholder="物位下限" disabled="disabled">
+                  </div>
+                  <button type="submit" class="btn btn-danger  btnRepo_modify btnRepo_modify2">修改</button>
+                  <button type="submit" class="btn btn-danger  btnRepo_bind btnRepo_bind2">确定</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.col-md-6 -->
+            <div class="col-md-6">
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h3 class="panel-title">3号仓库</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <h5 style="float: left;">高度：</h5>
+                    <input type="number" class="form-control input_repo3 height_repo3" placeholder="仓库高度" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">直径：</h5>
+                    <input type="number" class="form-control input_repo3 d_repo3" placeholder="仓库直径" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位上限：</h5>
+                    <input type="number" class="form-control input_repo3 limitUpper_repo3" placeholder="物位上限" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位下限：</h5>
+                    <input type="number" class="form-control input_repo3 limitLower_repo3" placeholder="物位下限" disabled="disabled">
+                  </div>
+                  <button type="submit" class="btn btn-success  btnRepo_modify btnRepo_modify3">修改</button>
+                  <button type="submit" class="btn btn-success  btnRepo_bind btnRepo_bind3">确定</button>
+                </div>
+              </div>
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title">4号仓库</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <h5 style="float: left;">高度：</h5>
+                    <input type="number" class="form-control input_repo4 height_repo4" placeholder="仓库高度" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">直径：</h5>
+                    <input type="number" class="form-control input_repo4 d_repo4" placeholder="仓库直径" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位上限：</h5>
+                    <input type="number" class="form-control input_repo4 limitUpper_repo4" placeholder="物位上限" disabled="disabled">
+                  </div>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位下限：</h5>
+                    <input type="number" class="form-control input_repo4 limitLower_repo4" placeholder="物位下限" disabled="disabled">
+                  </div>
+                  <button type="submit" class="btn btn-info  btnRepo_modify btnRepo_modify4">修改</button>
+                  <button type="submit" class="btn btn-info  btnRepo_bind btnRepo_bind4">确定</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="handler">
+          <h2 class="sub-header">用户花名册</h2><br />
+          <div class="row">
+            <div class="col-sm-12">
+              <ul class="nav nav-pills userNav" role="tablist">
+                <li role="presentation" class="userNav all_userNav active"><a>全部 <span class="badge all">0</span></a></li>
+                <li role="presentation" class="userNav already_userNav"><a>已审核 <span class="badge already">0</span></a></li>
+                <li role="presentation" class="userNav never_userNav"><a>未审核 <span class="badge never">0</span></a></li>
+              </ul>
+              <div class="list-group">
+                <a class="list-group-item ">
+                  <h4 class="list-group-item-heading">ID</h4>
+                  <p class="list-group-item-text">用户邮箱</p>
+                </a>
+              </div>
+            </div>
+            <!-- /.col-sm-4 -->
+          </div>
+        </div>
       </div>
       <!--版块二-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo">
+      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo user">
         <h1 class="page-header">超声波物位计</h1>
         <div class="table-responsive">
           <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
@@ -160,8 +284,9 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
-
+          <div class="right-container">
+            <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
+          </div>
         </div>
       </div>
       <!--版块三-->

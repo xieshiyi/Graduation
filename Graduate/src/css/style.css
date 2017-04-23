@@ -156,6 +156,9 @@ body {
       }
 }
 /*页面初始化的dislay*/
+.admin{
+  display: block;
+}
 .pageOne{
   display: block;
 }
@@ -218,10 +221,28 @@ body {
     display: block;
     padding: 10px 15px;
 }
-.dropdown>a{
+.dropdown>a,.userNav>a{
   color: #000;
 }
 .dropdown>a:focus, .dropdown>a:hover{
   text-decoration: none;
   background: #ccc;
 }
+/*管理界面上下间距*/
+.handler{
+  margin: 50px 0 0;
+}
+/*仓库信息按钮*/
+.btnRepo_modify,.btnRepo_bind{
+    width: 50%;
+    margin: 5% 25% 0px;
+}
+.btnRepo_modify{
+  display: inline-block;
+}
+.btnRepo_bind{
+  display: none;
+}
+/*.form-control[disabled]{
+      background-color: #f7f4e8;
+}*/

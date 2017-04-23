@@ -1,29 +1,39 @@
 $(function () {
+    if (localStorage.getItem('flag') == 1) {
+        var admin = document.getElementsByClassName('admin');
+        var user = document.getElementsByClassName('user');
+        for (let i = 0; i < admin.length; i++) {
+            admin[i].style.display = "none";
+            user[i].style.display = "block";
+        }
+        $('.nav_title').removeClass('active');
+        $('.two').addClass('active');
+    }
     /**
      * socket:websocket对象，与和服务端进行通信
      */
     var socket = io('http://monitor.io:8080/');
-    
-/**
- * 对Date的扩展，将 Date 转化为指定格式的String
- * 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
- *年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
- */
-Date.prototype.Format = function (fmt) {  
-    var o = {
-        "M+": this.getMonth() + 1, //月份 
-        "d+": this.getDate(), //日 
-        "h+": this.getHours(), //小时 
-        "m+": this.getMinutes(), //分 
-        "s+": this.getSeconds(), //秒 
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
-        "S": this.getMilliseconds() //毫秒 
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
+
+    /**
+     * 对Date的扩展，将 Date 转化为指定格式的String
+     * 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
+     *年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+     */
+    Date.prototype.Format = function (fmt) {
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
     //导航栏点击切换页面
     function changePage(num, pageName) {
         num.bind('click', function (event) {
@@ -75,18 +85,84 @@ Date.prototype.Format = function (fmt) {
             success: function (data) {
                 $('.email').val(data[0].email);
                 console.log('邮箱账号：---' + data[0].email);
-                // socket.emit('emailInfo', { 'email': data[0].email });
             }
         });
     }
     initEmail();
 
-    $('.btn_modify').bind('click', function () {
-        document.getElementsByClassName('email')[0].disabled = '';
-        $('.btn_bind').css('display', 'inline-block');
-        $('.btn_modify').css('display', 'none');
+    /**
+     * 初始化仓库信息
+     */
+    function initRepoinfo(repo, height_repo, d_repo, limitUpper_repo, limitLower_repo) {
+        $.ajax({
+            type: "get",
+            url: '/api/warehouse/getWarehouseByParam?repo=' + repo,
+            async: false,
+            success: function (data) {
+                height_repo.val(data[0].height);
+                d_repo.val(data[0].d);
+                limitUpper_repo.val(data[0].limit_upper);
+                limitLower_repo.val(data[0].limit_lower);
+                console.log('仓库:' + repo + ":---" + data[0].height);
+            }
+        });
+    }
+    initRepoinfo("1", $('.height_repo1'), $('.d_repo1'), $('.limitUpper_repo1'), $('.limitLower_repo1'));
+    initRepoinfo("2", $('.height_repo2'), $('.d_repo2'), $('.limitUpper_repo2'), $('.limitLower_repo2'));
+    initRepoinfo("3", $('.height_repo3'), $('.d_repo3'), $('.limitUpper_repo3'), $('.limitLower_repo3'));
+    initRepoinfo("4", $('.height_repo4'), $('.d_repo4'), $('.limitUpper_repo4'), $('.limitLower_repo4'));
+    /**
+     * 切换修改和绑定按钮
+     */
+    function checkModify(input, btn_bind, btn_modify) {
+        btn_modify.bind('click', function () {
+            for (var i = 0; i < input.length; i++) {
+                input[i].disabled = "";
+            }
+            btn_bind.css('display', 'inline-block');
+            btn_modify.css('display', 'none');
+        });
+    }
+    function checkBind(input, btn_bind, btn_modify) {
+        for (var i = 0; i < input.length; i++) {
+            input[i].disabled = "disabled";
+        }
+        btn_modify.css('display', 'inline-block');
+        btn_bind.css('display', 'none');
+    }
+    checkModify($('.email'), $('.btn_bind'), $('.btn_modify'));
+    checkModify($('.input_repo1'), $('.btnRepo_bind1'), $('.btnRepo_modify1'));
+    checkModify($('.input_repo2'), $('.btnRepo_bind2'), $('.btnRepo_modify2'));
+    checkModify($('.input_repo3'), $('.btnRepo_bind3'), $('.btnRepo_modify3'));
+    checkModify($('.input_repo4'), $('.btnRepo_bind4'), $('.btnRepo_modify4'));
+    /**
+     * 更新仓库信息
+     */
+    function updateRepo(input, btn_bind, btn_modify, height_repo, d_repo, limitUpper_repo, limitLower_repo, repo) {
+        var url = '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo
+        btn_bind.bind('click', function () {
+            $.ajax({
+                type: "get",
+                url: '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo,
+                async: false,
+                success: function (data) {
+                    if (data.code == 200) {
+                        alert('修改成功！');
+                        initRepoinfo(repo, height_repo, d_repo, limitUpper_repo, limitLower_repo);
+                    }
+                    else {
+                        alert('修改失败！');
+                    }
+                    checkBind(input, btn_bind, btn_modify);
+                }
+            });
+        });
+    }
+    updateRepo($('.input_repo1'), $('.btnRepo_bind1'), $('.btnRepo_modify1'), $('.height_repo1'), $('.d_repo1'), $('.limitUpper_repo1'), $('.limitLower_repo1'), '1');
+    updateRepo($('.input_repo2'), $('.btnRepo_bind2'), $('.btnRepo_modify2'), $('.height_repo2'), $('.d_repo2'), $('.limitUpper_repo2'), $('.limitLower_repo2'), '2');
+    updateRepo($('.input_repo3'), $('.btnRepo_bind3'), $('.btnRepo_modify3'), $('.height_repo3'), $('.d_repo3'), $('.limitUpper_repo3'), $('.limitLower_repo3'), '3');
+    updateRepo($('.input_repo4'), $('.btnRepo_bind4'), $('.btnRepo_modify4'), $('.height_repo4'), $('.d_repo4'), $('.limitUpper_repo4'), $('.limitLower_repo4'), '4');
 
-    });
     $('.btn_bind').bind('click', function () {
         var email = $('.email').val();
         var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
@@ -99,15 +175,99 @@ Date.prototype.Format = function (fmt) {
                 alert('绑定成功！');
             });
             initEmail();
-            document.getElementsByClassName('email')[0].disabled = 'disabled';
-            $('.btn_bind').css('display', 'none');
-            $('.btn_modify').css('display', 'inline-block');
+            checkBind($('.email'), $('.btn_bind'), $('.btn_modify'));
         }
         else {
             alert('请输入正确邮箱账号！');
         }
     });
 
+    /**
+     * 用户信息获取
+     */
+    function insertToUserList(data) {
+        var row = $('.list-group');
+        row.find('a').remove();
+        if (data[0] == undefined) {
+            row.append('<a class="list-group-item "><h4 class="list-group-item-heading">用户邮箱</h4><p class="list-group-item-text">序号</p></a>');
+        }
+        $.each(data, function (i, n) {
+            console.log(n)
+            row.append('<a class="list-group-item "><h4 class="list-group-item-heading">' + n.id + '</h4><p class="list-group-item-text">' + n.username + '</p></a>');
+        });
+    }
+    function initUserInfo() {
+        var result = [];
+        $.ajax({
+            type: "get",
+            url: "/api/users",
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+    }
+    function initAllUserCount() {
+        var result = 0;
+        $.ajax({
+            type: "get",
+            url: "/api/users/getAllUserCount",
+            async: false,
+            success: function (data) {
+                result = data[0].flagCount;
+            }
+        });
+        return result;
+    }
+    function initUserCount(flag) {
+        var result = 0;
+        $.ajax({
+            type: "get",
+            url: "/api/users/getUserCountByParam?flag=" + flag,
+            async: false,
+            success: function (data) {
+                result = data[0].flagCount;
+            }
+        });
+        return result;
+    }
+
+    function getUserInfoByParam(flag) {
+        var result = [];
+        $.ajax({
+            type: "get",
+            url: "/api/users/getUserByParam?key=flag&value=" + flag,
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+        return result;
+    }
+    /**
+     * 用户信息的查询
+     */
+    $('.all').html(initAllUserCount());
+    $('.already').html(initUserCount(1));
+    $('.never').html(initUserCount(0));
+
+    insertToUserList(initUserInfo());
+    $('.all_userNav').bind('click', function () {
+        insertToUserList(initUserInfo());
+        $('.userNav').removeClass('active');
+        $('.all_userNav').addClass('active');
+    });
+    $('.already_userNav').bind('click', function () {
+        insertToUserList(getUserInfoByParam(1));
+        $('.userNav').removeClass('active');
+        $('.already_userNav').addClass('active');
+    });
+    $('.never_userNav').bind('click', function () {
+        insertToUserList(getUserInfoByParam(0));
+        $('.userNav').removeClass('active');
+        $('.never_userNav').addClass('active');
+    });
     // 基于准备好的dom，初始化echarts实例
     var lineChart = echarts.init(document.getElementById('line-chart'));
     var dataLineChart = echarts.init(document.getElementById('data-line-chart'));

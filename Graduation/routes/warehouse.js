@@ -50,7 +50,7 @@ router.get('/getWarehouseByParam', function(req, res, next){
 router.get('/updateWarehouse', function(req, res, next){
       var param = req.query || req.params;
       pool.getConnection(function(err, connection) {
-        connection.query('UPDATE user_info SET height = ? , d = ? , upperLimit = ? , lowerLimit = ?  WHERE number = ?', [param.height,param.d,param.upperLimit,param.lowerLimit,param.number],function(err,result,fields){
+        connection.query('UPDATE warehouse_info SET height = ? , d = ? , limit_upper = ? , limit_lower = ?  WHERE repo = ?', [param.height,param.d,param.upperLimit,param.lowerLimit,param.repo],function(err,result,fields){
           if(result) {      
                 result = {   
                           code: 200,   

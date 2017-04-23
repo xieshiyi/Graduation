@@ -97,13 +97,15 @@ function checkSigninForm() {
                     }
                     else {
                         if (data[0].password == password) {
+                            alert("登录成功!");
+                            window.location.href = "/index.html";
                             $('#inputEmailin').val('');
                             $('#inputPasswordin').val('');
-                            alert("登录成功!");
-                            sessionStorage.removeitem('user')
-                            sessionStorage.setItem('user', email)
-                            localStorage.setItem('flag',data[0].flag);
-                            window.location.href = "/index.html";
+                            sessionStorage.removeItem('user');
+                            sessionStorage.setItem('user', email);
+                            localStorage.removeItem('flag');
+                            localStorage.setItem('flag', data[0].flag);
+
                         }
                         else {
                             signinBlock();
