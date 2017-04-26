@@ -9,6 +9,7 @@ $(function () {
         $('.nav_title').removeClass('active');
         $('.two').addClass('active');
     }
+
     /**
      * socket:websocket对象，与和服务端进行通信
      */
@@ -182,6 +183,7 @@ $(function () {
         }
     });
 
+
     /**
      * 用户信息获取
      */
@@ -189,11 +191,27 @@ $(function () {
         var row = $('.list-group');
         row.find('a').remove();
         if (data[0] == undefined) {
-            row.append('<a class="list-group-item "><h4 class="list-group-item-heading">用户邮箱</h4><p class="list-group-item-text">序号</p></a>');
+            row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">用户邮箱</h4><span class="list-group-item-text">序号</span></a>');
         }
         $.each(data, function (i, n) {
-            console.log(n)
-            row.append('<a class="list-group-item "><h4 class="list-group-item-heading">' + n.id + '</h4><p class="list-group-item-text">' + n.username + '</p></a>');
+            console.log(i)
+            if (i % 2 == 0) {
+                if (n.flag == '0') {
+                    row.append('<a class="list-group-item"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_check" onclick="checkUser(' + n.id + ')">审核</button><button type="" class="btn btn-primary  btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                }
+                else {
+                    row.append('<a class="list-group-item"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                }
+            }
+            else {
+                if (n.flag == '0') {
+                    row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_check" onclick="checkUser(' + n.id + ')">审核</button><button type="" class="btn btn-primary  btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                }
+                else {
+                    row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                }
+            }
+
         });
     }
     function initUserInfo() {
@@ -245,6 +263,7 @@ $(function () {
         });
         return result;
     }
+   
     /**
      * 用户信息的查询
      */
@@ -268,6 +287,9 @@ $(function () {
         $('.userNav').removeClass('active');
         $('.never_userNav').addClass('active');
     });
+
+
+
     // 基于准备好的dom，初始化echarts实例
     var lineChart = echarts.init(document.getElementById('line-chart'));
     var dataLineChart = echarts.init(document.getElementById('data-line-chart'));

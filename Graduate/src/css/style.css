@@ -31,7 +31,7 @@ body {
  */
 
 /* Hide for mobile, show later */
-.sidebar {
+/*.sidebar {
   display: none;
 }
 @media screen and (min-width: 768px) {
@@ -44,7 +44,7 @@ body {
     display: block;
     padding: 20px;
     overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    overflow-y: auto; 
     background-color: #222222;
     border-right: 1px solid #eee;
     
@@ -56,21 +56,21 @@ body {
         width: 100%;
         z-index: -1;
   }
-}
+}*/
 
 /* Sidebar navigation */
-.nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
+/*.nav-sidebar {
+  margin-right: -21px;  
   margin-bottom: 20px;
   margin-left: -20px;
 }
 .nav-sidebar > li > a {
   padding-right: 20px;
   padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
+}*/
+.navbar-right > .active > a,
+.navbar-right > .active > a:hover,
+.navbar-right > .active > a:focus {
   color: #fff;
   background: rgba(0, 0, 0, 0.17) !important;
 }
@@ -246,3 +246,25 @@ body {
 /*.form-control[disabled]{
       background-color: #f7f4e8;
 }*/
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover{
+    z-index: 2;
+    color: #333;
+    background-color: rgb(155, 204, 228);
+    border-color: #d9edf7;
+}
+.list-group-item.active .list-group-item-text{
+      color: #777;    
+     
+}
+.list-group-item-text{
+ margin-right: 65%; 
+}
+/*.btn_user{
+  float: right;
+}*/
+.btn_delete{
+ margin-left: 15px;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+      background-color: transparent;
+}

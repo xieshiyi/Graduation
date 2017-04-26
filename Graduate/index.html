@@ -45,20 +45,19 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <!--<li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>-->
-          <li><a href="#">帮助</a></li>
+          <li class="nav_title one active admin"><a href="#">设置<span class="sr-only">(current)</span></a></li>
+          <li class="nav_title two user"><a href="#">超声波</a></li>
+          <li class="nav_title three"><a href="#">电容式</a></li>
+          <li class="nav_title four"><a href="#">微波雷达</a></li>
+          <li class="nav_title five"><a href="#">静压式</a></li>
+          <li class="nav_title five"><a href="#">修改个人信息</a></li>
         </ul>
-        <!--<form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>-->
       </div>
     </div>
   </nav>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-3 col-md-2 sidebar">
+      <!--<div class="col-sm-3 col-md-2 sidebar">
         <div class="fan">
           <ul class="nav nav-sidebar">
             <li class="nav_title one active admin"><a href="#">设置<span class="sr-only">(current)</span></a></li>
@@ -68,9 +67,9 @@
             <li class="nav_title five"><a href="#">静压式</a></li>
           </ul>
         </div>
-      </div>
+      </div>-->
       <!--版块一-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageOne admin">
+      <div class="col-sm-12  col-md-12 main pageOne admin">
         <h1 class="page-header">物位计</h1>
         <div class="row placeholders">
           <div class="col-xs-6 col-sm-3 placeholder">
@@ -212,7 +211,10 @@
           </div>
         </div>
         <div class="handler">
-          <h2 class="sub-header">用户花名册</h2><br />
+          <h2 class="sub-header">用户花名册</h2>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="查找...">
+          </form><br />
           <div class="row">
             <div class="col-sm-12">
               <ul class="nav nav-pills userNav" role="tablist">
@@ -220,10 +222,15 @@
                 <li role="presentation" class="userNav already_userNav"><a>已审核 <span class="badge already">0</span></a></li>
                 <li role="presentation" class="userNav never_userNav"><a>未审核 <span class="badge never">0</span></a></li>
               </ul>
+
               <div class="list-group">
                 <a class="list-group-item ">
                   <h4 class="list-group-item-heading">ID</h4>
-                  <p class="list-group-item-text">用户邮箱</p>
+                  <span class="list-group-item-text">用户邮箱</span>
+                  <div class="btn_user">
+                    <button type="" class="btn btn-primary  btn_check">审核</button>
+                    <button type="" class="btn btn-primary  btn_delete">删除</button>
+                  </div>
                 </a>
               </div>
             </div>
@@ -232,7 +239,7 @@
         </div>
       </div>
       <!--版块二-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageTwo user">
+      <div class="col-sm-9 col-md-10  main pageTwo user">
         <h1 class="page-header">超声波物位计</h1>
         <div class="table-responsive">
           <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
@@ -290,7 +297,7 @@
         </div>
       </div>
       <!--版块三-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageThree">
+      <div class="col-sm-9  col-md-10  main pageThree">
         <h1 class="page-header">电容式物位计</h1>
         <div class="table-responsive">
           <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
@@ -346,7 +353,7 @@
         </div>
       </div>
       <!--版块四-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFour">
+      <div class="col-sm-9  col-md-10  main pageFour">
         <h1 class="page-header">微波雷达物位计</h1>
         <div class="table-responsive">
 
@@ -404,7 +411,7 @@
         </div>
       </div>
       <!--版块五-->
-      <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main pageFive">
+      <div class="col-sm-9  col-md-10  main pageFive">
         <h1 class="page-header">静压式液位计</h1>
         <div class="table-responsive">
           <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
