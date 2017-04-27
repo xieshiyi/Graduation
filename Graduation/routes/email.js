@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var dateFormat = require('dateFormat');
+var dateFormat = require('dateformat');
 /**
  * 导入MYSQL模块
  */

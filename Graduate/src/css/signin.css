@@ -1,7 +1,17 @@
 body {
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #eee;
+  background-color: #f7fafc;
+}
+#particles {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+#particles canvas {
+    display: block;
 }
 
 .form-signin {
