@@ -17,6 +17,7 @@
   <link href="src/css/bootstrap.min.css.map" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="src/css/style.css" rel="stylesheet">
+  <link href="src/css/signin.css" rel="stylesheet">
 
   <!-- 引入 echarts.js -->
 
@@ -138,7 +139,22 @@
           <li class="nav_title three"><a href="#">电容式</a></li>
           <li class="nav_title four"><a href="#">微波雷达</a></li>
           <li class="nav_title five"><a href="#">静压式</a></li>
-          <li class="nav_title five"><a href="#">修改个人信息</a></li>
+          <li class="nav_title six">
+            <a href="#">修改个人信息</a>
+            <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
+              <!--<li class="email"><a>David.Stevenson@live.com</a></li>-->
+              <!--Avatar Area-->
+              <li class="edit">
+                <a href="#">修改密码</a>
+              </li>
+              <!--/Theme Selector Area-->
+              <li class="dropdown-footer">
+                <a href="login.html">
+                  退出登录
+                 </a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>
@@ -548,7 +564,18 @@
       </div>
     </div>
   </div>
-
+  <div class="modifyPwd" style="display:none">
+    <div class="container content">
+      <form class="form-signin">
+        <h2 class="form-signin-heading changePwdHead">修改密码</h2>
+        <label for="inputEmail" class="sr-only">原密码</label>
+        <input type="password" id="inputOldpwd" class="form-control" placeholder="原密码" required autofocus>
+        <label for="inputPassword" class="sr-only">确认密码</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="确认密码" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">修改</button>
+      </form>
+    </div>
+  </div>
 </body>
 <script src="src/js/jquery-3.1.1.min.js"></script>
 <script src="src/js/bootstrap.min.js"></script>

@@ -267,3 +267,43 @@ body {
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
       background-color: transparent;
 }
+.btn_user{
+    right: 5%;
+    top: 20%;
+    position: absolute;
+}
+/*修改个人信息按钮*/
+
+.navbar .navbar-nav>li.open .dropdown-menu {
+    margin-top: 0;
+    right: 0;
+    border: 0!important;
+}
+@media only screen and (max-width: 760px){
+  .navbar .navbar-nav+.dropdown-menu {
+    min-width: 200px;
+}
+}
+
+.navbar .navbar-nav+.dropdown-menu {
+    min-width: 100%;
+}
+.dropdown-footer>a,.edit>a{
+  text-align: center;
+}
+/*修改密码*/
+.modifyPwd{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    z-index: 10000;
+    background-color: rgba(0,0,0,.5);
+}
+.content{
+    position: relative;
+    top: 25%;
+}
+.changePwdHead{
+      color: #eee!important;
+}

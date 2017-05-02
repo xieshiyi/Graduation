@@ -39,6 +39,7 @@ $(function () {
     function changePage(num, pageName) {
         num.bind('click', function (event) {
             $('.nav_title').removeClass('active');
+            $('.six').removeClass('open');
             num.addClass('active');
             $('.main').css('display', 'none');
             pageName.css('display', 'block');
@@ -49,7 +50,32 @@ $(function () {
     changePage($('.three'), $('.pageThree'));
     changePage($('.four'), $('.pageFour'));
     changePage($('.five'), $('.pageFive'));
+    $('.six').bind('click',function(){
+        $('.nav_title').removeClass('active');
+        $('.six').addClass('open');
 
+    });
+    /**
+     * 点击退出按钮，清空session等信息
+     */
+    $('.dropdown-footer').bind('click',function(){
+        sessionStorage.removeItem('user');
+        localStorage.removeItem('flag');
+    });
+    /**
+     * 点击修改密码按钮
+     */
+    $('.edit').bind('click',function(){
+        $('.modifyPwd').css('display',"block");
+    });
+
+/**
+ * 
+ * @param {时间段监控的导航按钮} data1 
+ * @param {报警详情的导航按钮} data2 
+ * @param {时间段监控页面} data3 
+ * @param {报警详情页面} title 
+ */
     //筛选页面点击切换
     function navChange(data1, data2, data3, title) {
         data1.bind('click', function (event) {
@@ -200,7 +226,7 @@ $(function () {
                     row.append('<a class="list-group-item"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_check" onclick="checkUser(' + n.id + ')">审核</button><button type="" class="btn btn-primary  btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
                 }
                 else {
-                    row.append('<a class="list-group-item"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                    row.append('<a class="list-group-item"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
                 }
             }
             else {
@@ -208,7 +234,7 @@ $(function () {
                     row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_check" onclick="checkUser(' + n.id + ')">审核</button><button type="" class="btn btn-primary  btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
                 }
                 else {
-                    row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
+                    row.append('<a class="list-group-item active"><h4 class="list-group-item-heading">' + n.id + '</h4><span class="list-group-item-text">' + n.username + '</span><div class="btn_user"><button type="" class="btn btn-primary btn_delete" onclick="deleteUser(' + n.id + ')">删除</button></div></a>');
                 }
             }
 
