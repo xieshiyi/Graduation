@@ -19,6 +19,7 @@
 
 <body>
     <div class="container">
+
         <div class="form-signin">
             <h2 class="form-signin-heading">物位计监控系统</h2>
             <div class="index-tab-navs">
@@ -52,6 +53,33 @@
                 </div>
             </form>
         </div>
+        <div class="alert alert-success signinSuc" role="alert">
+            <strong>登录成功！</strong>.
+        </div>
+        <div class="alert alert-success signupSuc" role="alert">
+            <strong>恭喜!</strong> 注册成功，请等候管理员审核.
+        </div>
+        <div class="alert alert-danger errEmail" role="alert">
+            <strong>错误!</strong> 请输入正确的邮箱账号!.
+        </div>
+        <div class="alert alert-danger errPwdShort" role="alert">
+            <strong>错误!</strong> 请输入6位以上密码！
+        </div>
+        <div class="alert alert-danger errSignup" role="alert">
+            <strong>错误!</strong> 注册失败！
+        </div>
+        <div class="alert alert-danger errAlready" role="alert">
+            <strong>错误!</strong> 该邮箱已经注册，请直接登录！
+        </div>
+        <div class="alert alert-danger errWait" role="alert">
+            <strong>错误!</strong> 该账户还未审核通过，请通知管理员!
+        </div>
+        <div class="alert alert-danger errPwd" role="alert">
+            <strong>错误!</strong> 密码错误!
+        </div>
+        <div class="alert alert-danger errNever" role="alert">
+            <strong>错误!</strong> 该邮箱未注册!
+        </div>
     </div>
     <!-- /container -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -59,7 +87,7 @@
     <script src="src/js/bootstrap.min.js"></script>
     <script src="src/js/signin.js"></script>
     <div id="particles">
-        <canvas id ="myCanvas" class="particles-js-canvas-el" width="1385" height="814" style="width: 100%; height: 100%;"></canvas>
+        <canvas id="myCanvas" class="particles-js-canvas-el" width="1385" height="814" style="width: 100%; height: 100%;"></canvas>
     </div>
 </body>
 

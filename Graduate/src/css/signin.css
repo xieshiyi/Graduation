@@ -125,3 +125,7 @@ html.no-touchevents .index-tab-navs a:hover {
 .view-signup{
   display: block;
 }
+ .alert{
+    text-align: center!important;
+    display: none;
+}

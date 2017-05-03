@@ -20,7 +20,7 @@
   <link href="src/css/signin.css" rel="stylesheet">
 
   <!-- 引入 echarts.js -->
-
+ 
   <script>
     if (sessionStorage.getItem('user') == null) {
       window.location.href = "/signin.html";
@@ -159,6 +159,22 @@
       </div>
     </div>
   </nav>
+
+  <div class="alert alert-success modifySuc" role="alert">
+    <strong>恭喜!</strong> 修改成功！
+  </div>
+<div class="alert alert-success bindSuc" role="alert">
+    <strong>恭喜!</strong> 绑定成功！
+  </div>
+  <div class="alert alert-danger errmodify" role="alert">
+    <strong>错误!</strong> 修改失败！
+  </div>
+  <div class="alert alert-danger errEmailBind" role="alert">
+    <strong>错误!</strong> 请输入绑定邮箱账号!
+  </div>
+  <div class="alert alert-danger errEmail" role="alert">
+    <strong>错误!</strong> 请输入正确邮箱账号！!
+  </div>
   <div class="container-fluid">
     <div class="row">
       <!--<div class="col-sm-3 col-md-2 sidebar">
@@ -565,14 +581,26 @@
     </div>
   </div>
   <div class="modifyPwd" style="display:none">
+    <div class="alert alert-success changePwdSuc" role="alert">
+      <strong>恭喜!</strong>密码修改成功！请重新登录！
+    </div>
+    <div class="alert alert-danger errPwdTwice" role="alert">
+      <strong>错误!</strong> 两次密码输入不一致!.
+    </div>
+    <div class="alert alert-danger errOldPwd" role="alert">
+      <strong>错误!</strong> 原密码输入错误！
+    </div>
     <div class="container content">
       <form class="form-signin">
         <h2 class="form-signin-heading changePwdHead">修改密码</h2>
         <label for="inputEmail" class="sr-only">原密码</label>
         <input type="password" id="inputOldpwd" class="form-control" placeholder="原密码" required autofocus>
+        <label for="inputPassword" class="sr-only">新密码</label>
+        <input type="password" id="newPassword" class="form-control" placeholder="新密码" required>
         <label for="inputPassword" class="sr-only">确认密码</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="确认密码" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">修改</button>
+        <input type="password" id="checkPassword" class="form-control" placeholder="确认密码" required>
+        <button class="btn btn-lg btn-primary btn-block btnChangePwd" type="submit">修改</button>
+        <button class="btn btn-lg btn-primary btn-block btnCancel">取消</button>
       </form>
     </div>
   </div>

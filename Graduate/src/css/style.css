@@ -307,3 +307,9 @@ body {
 .changePwdHead{
       color: #eee!important;
 }
+.alert{
+  position: fixed;
+    top: 50px;
+    width: 100%;
+    z-index: 1000;
+}

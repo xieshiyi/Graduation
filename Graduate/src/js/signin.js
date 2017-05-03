@@ -124,14 +124,17 @@ function signinBlock() {
 }
 var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
 function checkSignupForm() {
+    $('.alert').css('display','none');
     var email = $('#inputEmailup').val();
     var password = $('#inputPasswordup').val();
     if (!matchEmail.exec(email)) {
-        alert('请输入正确的邮箱账号！');
+        console.log('请输入正确的邮箱账号！');
+        $('.errEmail').css('display','block');
         return;
     }
     else if (password.length < 6) {
-        alert('请输入6位以上密码！');
+        console.log('请输入6位以上密码！');
+        $('.errPwdShort').css('display','block');
         return;
     }
     else if (matchEmail.exec(email) && password.length >= 6) {
@@ -147,13 +150,15 @@ function checkSignupForm() {
                         async: false,
                         success: function (data) {
                             if (data.code == 200) {
-                                alert('注册成功！请通知管理员审核！');
+                                console.log('注册成功！请通知管理员审核！');
+                                $('.signupSuc').css('display','block');
                                 $('#inputEmailup').val('');
                                 $('#inputPasswordup').val('');
                                 signinBlock();
                             }
                             else {
-                                alert('注册失败！');
+                                console.log('注册失败！');
+                                $('.errSignup').css('display','block');
                                 $('#inputEmailup').val('');
                                 $('#inputPasswordup').val('');
                             }
@@ -164,7 +169,8 @@ function checkSignupForm() {
                     $('#inputEmailup').val('');
                     $('#inputPasswordup').val('');
                     signinBlock();
-                    alert("该邮箱已经注册，请直接登录！");
+                    console.log("该邮箱已经注册，请直接登录！");
+                    $('.errAlready').css('display','block');
                 }
             }
         });
@@ -172,10 +178,13 @@ function checkSignupForm() {
 
 }
 function checkSigninForm() {
+    $('.alert').css('display','none');
     var email = $('#inputEmailin').val();
     var password = $('#inputPasswordin').val();
     if (!matchEmail.exec(email)) {
-        alert('请输入正确的邮箱账号！');
+        console.log('请输入正确的邮箱账号！');
+        $('.errEmail').css('display','block');
+         return;
     }
     if (matchEmail.exec(email) && password.length > 0) {
         $.ajax({
@@ -188,11 +197,12 @@ function checkSigninForm() {
                         signinBlock();
                         $('#inputEmailin').val('');
                         $('#inputPasswordin').val('');
-                        alert("该账户还未审核通过，请通知管理员!");
+                       console.log("该账户还未审核通过，请通知管理员!");
+                       $('.errWait').css('display','block');
                     }
                     else {
                         if (data[0].password == password) {
-                            alert("登录成功!");
+                            $('.signinSuc').css('display','block');
                             window.location.href = "/index.html";
                             $('#inputEmailin').val('');
                             $('#inputPasswordin').val('');
@@ -205,7 +215,8 @@ function checkSigninForm() {
                         else {
                             signinBlock();
                             $('#inputPasswordin').val('');
-                            alert("密码错误!");
+                            console.log("密码错误!");
+                            $('.errPwd').css('display','block');
                         }
                     }
                 }
@@ -213,7 +224,8 @@ function checkSigninForm() {
                     signinBlock();
                     $('#inputEmailin').val('');
                     $('#inputPasswordin').val('');
-                    alert("该邮箱未注册!");
+                    console.log("该邮箱未注册!");
+                    $('.errNever').css('display','block');
                 }
 
             }

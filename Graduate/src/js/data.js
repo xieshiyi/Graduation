@@ -1,4 +1,5 @@
 $(function () {
+    
     if (localStorage.getItem('flag') == 1) {
         var admin = document.getElementsByClassName('admin');
         var user = document.getElementsByClassName('user');
@@ -9,6 +10,7 @@ $(function () {
         $('.nav_title').removeClass('active');
         $('.two').addClass('active');
     }
+    var userAccount = sessionStorage.getItem('user');
 
     /**
      * socket:websocket对象，与和服务端进行通信
@@ -50,7 +52,7 @@ $(function () {
     changePage($('.three'), $('.pageThree'));
     changePage($('.four'), $('.pageFour'));
     changePage($('.five'), $('.pageFive'));
-    $('.six').bind('click',function(){
+    $('.six').bind('click', function () {
         $('.nav_title').removeClass('active');
         $('.six').addClass('open');
 
@@ -58,24 +60,70 @@ $(function () {
     /**
      * 点击退出按钮，清空session等信息
      */
-    $('.dropdown-footer').bind('click',function(){
+    $('.dropdown-footer').bind('click', function () {
         sessionStorage.removeItem('user');
         localStorage.removeItem('flag');
     });
     /**
      * 点击修改密码按钮
      */
-    $('.edit').bind('click',function(){
-        $('.modifyPwd').css('display',"block");
+    $('.edit').bind('click', function () {
+        $('.modifyPwd').css('display', "block");
+    });
+    $('.btnCancel').bind('click', function () {
+        $('.modifyPwd').css('display', "none");
+    });
+    $('.btnChangePwd').bind('click',function () {
+        $('.alert').css('display','none');
+        var oldPassword = $('#inputOldpwd').val();
+        var newPassword = $('#newPassword').val();
+        var checkPassword = $('#checkPassword').val();
+        $.ajax({
+            type: "get",
+            url: 'api/users/getUserByParam?key=username&value=' + userAccount,
+            async: false,
+            success: function (data) {
+                console.log('----用户：'+userAccount+'密码：'+data[0].password)
+                if (data[0].password == oldPassword) {
+                    if (newPassword == checkPassword) {
+                        var id = data[0].id;
+                        $.ajax({
+                            type: "get",
+                            url: 'api/users/updateUserPassword?password=' + checkPassword + 'id=' + id,
+                            async: false,
+                            success: function (data) {
+                                alert('密码修改成功！请重新登录！');
+                                // $(".changePwdSuc").slideDown("slow");
+                                $('.modifyPwd').css('display', "none");
+                                window.location.href = "/signin.html";
+                                sessionStorage.removeItem('user');
+                                localStorage.removeItem('flag');
+                                
+                            }
+                        });
+                    }
+                    else {
+                        console.log('两次密码输入不一致！');
+                        $(".errPwdTwice").slideDown("slow");
+                        $('#checkPassword').val();
+                    }
+                }
+                else {
+                    console.log('原密码输入错误！');
+                    $(".errOldPwd").slideDown("slow");
+                    $('#inputOldpwd').val();
+                }
+            }
+        });
     });
 
-/**
- * 
- * @param {时间段监控的导航按钮} data1 
- * @param {报警详情的导航按钮} data2 
- * @param {时间段监控页面} data3 
- * @param {报警详情页面} title 
- */
+    /**
+     * 
+     * @param {时间段监控的导航按钮} data1 
+     * @param {报警详情的导航按钮} data2 
+     * @param {时间段监控页面} data3 
+     * @param {报警详情页面} title 
+     */
     //筛选页面点击切换
     function navChange(data1, data2, data3, title) {
         data1.bind('click', function (event) {
@@ -168,17 +216,20 @@ $(function () {
     function updateRepo(input, btn_bind, btn_modify, height_repo, d_repo, limitUpper_repo, limitLower_repo, repo) {
         var url = '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo
         btn_bind.bind('click', function () {
+            $('.alert').css('display','none');
             $.ajax({
                 type: "get",
                 url: '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo,
                 async: false,
                 success: function (data) {
                     if (data.code == 200) {
-                        alert('修改成功！');
+                        console.log('修改成功！');
+                        $(".modifySuc").slideDown("slow");
                         initRepoinfo(repo, height_repo, d_repo, limitUpper_repo, limitLower_repo);
                     }
                     else {
-                        alert('修改失败！');
+                        console.log('修改失败！');
+                        $(".errmodify").slideDown("slow");
                     }
                     checkBind(input, btn_bind, btn_modify);
                 }
@@ -191,21 +242,25 @@ $(function () {
     updateRepo($('.input_repo4'), $('.btnRepo_bind4'), $('.btnRepo_modify4'), $('.height_repo4'), $('.d_repo4'), $('.limitUpper_repo4'), $('.limitLower_repo4'), '4');
 
     $('.btn_bind').bind('click', function () {
+        $('.alert').css('display','none');
         var email = $('.email').val();
         var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
         console.log(email);
         if (email == '') {
-            alert('请输入绑定邮箱账号!');
+            console.log('请输入绑定邮箱账号!');
+            $(".errEmailBind").slideDown("slow");
         }
         else if (matchEmail.exec(email)) {
             var email_posting = $.get('/api/email/updateEmail', { email: email }, function (result) {
-                alert('绑定成功！');
+                console.log('绑定成功！');
+                $(".bindSuc").slideDown("slow");
             });
             initEmail();
             checkBind($('.email'), $('.btn_bind'), $('.btn_modify'));
         }
         else {
-            alert('请输入正确邮箱账号！');
+            console.log('请输入正确邮箱账号！');
+             $(".errEmail").slideDown("slow");
         }
     });
 
@@ -289,7 +344,7 @@ $(function () {
         });
         return result;
     }
-   
+
     /**
      * 用户信息的查询
      */
