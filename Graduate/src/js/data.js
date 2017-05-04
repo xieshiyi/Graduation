@@ -1,14 +1,14 @@
 $(function () {
-    
-    if (localStorage.getItem('flag') == 1) {
+
+    if (localStorage.getItem('flag') == -1) {
         var admin = document.getElementsByClassName('admin');
         var user = document.getElementsByClassName('user');
         for (let i = 0; i < admin.length; i++) {
-            admin[i].style.display = "none";
-            user[i].style.display = "block";
+            admin[i].style.display = "block";
+            // user[i].style.display = "none";
         }
-        $('.nav_title').removeClass('active');
-        $('.two').addClass('active');
+        // $('.nav_title').removeClass('active');
+        // $('.two').addClass('active');
     }
     var userAccount = sessionStorage.getItem('user');
 
@@ -73,8 +73,8 @@ $(function () {
     $('.btnCancel').bind('click', function () {
         $('.modifyPwd').css('display', "none");
     });
-    $('.btnChangePwd').bind('click',function () {
-        $('.alert').css('display','none');
+    $('.btnChangePwd').bind('click', function () {
+        $('.alert').css('display', 'none');
         var oldPassword = $('#inputOldpwd').val();
         var newPassword = $('#newPassword').val();
         var checkPassword = $('#checkPassword').val();
@@ -83,7 +83,7 @@ $(function () {
             url: 'api/users/getUserByParam?key=username&value=' + userAccount,
             async: false,
             success: function (data) {
-                console.log('----用户：'+userAccount+'密码：'+data[0].password)
+                console.log('----用户：' + userAccount + '密码：' + data[0].password)
                 if (data[0].password == oldPassword) {
                     if (newPassword == checkPassword) {
                         var id = data[0].id;
@@ -94,23 +94,26 @@ $(function () {
                             success: function (data) {
                                 alert('密码修改成功！请重新登录！');
                                 // $(".changePwdSuc").slideDown("slow");
+                                // $('.changePwdSuc').delay(2000).hide(0);
                                 $('.modifyPwd').css('display', "none");
                                 window.location.href = "/signin.html";
                                 sessionStorage.removeItem('user');
                                 localStorage.removeItem('flag');
-                                
+
                             }
                         });
                     }
                     else {
                         console.log('两次密码输入不一致！');
                         $(".errPwdTwice").slideDown("slow");
+                        $('.errPwdTwice').delay(2000).hide(0);
                         $('#checkPassword').val();
                     }
                 }
                 else {
                     console.log('原密码输入错误！');
                     $(".errOldPwd").slideDown("slow");
+                    $('.errOldPwd').delay(2000).hide(0);
                     $('#inputOldpwd').val();
                 }
             }
@@ -216,7 +219,7 @@ $(function () {
     function updateRepo(input, btn_bind, btn_modify, height_repo, d_repo, limitUpper_repo, limitLower_repo, repo) {
         var url = '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo
         btn_bind.bind('click', function () {
-            $('.alert').css('display','none');
+            $('.alert').css('display', 'none');
             $.ajax({
                 type: "get",
                 url: '/api/warehouse/updateWarehouse?height=' + height_repo.val() + "&d=" + d_repo.val() + "&upperLimit=" + limitUpper_repo.val() + "&lowerLimit=" + limitLower_repo.val() + "&repo=" + repo,
@@ -225,11 +228,13 @@ $(function () {
                     if (data.code == 200) {
                         console.log('修改成功！');
                         $(".modifySuc").slideDown("slow");
+                        $('.modifySuc').delay(2000).hide(0);
                         initRepoinfo(repo, height_repo, d_repo, limitUpper_repo, limitLower_repo);
                     }
                     else {
                         console.log('修改失败！');
                         $(".errmodify").slideDown("slow");
+                        $('.errmodify').delay(2000).hide(0);
                     }
                     checkBind(input, btn_bind, btn_modify);
                 }
@@ -241,30 +246,34 @@ $(function () {
     updateRepo($('.input_repo3'), $('.btnRepo_bind3'), $('.btnRepo_modify3'), $('.height_repo3'), $('.d_repo3'), $('.limitUpper_repo3'), $('.limitLower_repo3'), '3');
     updateRepo($('.input_repo4'), $('.btnRepo_bind4'), $('.btnRepo_modify4'), $('.height_repo4'), $('.d_repo4'), $('.limitUpper_repo4'), $('.limitLower_repo4'), '4');
 
+    /**
+     * 报警邮箱绑定
+     */
     $('.btn_bind').bind('click', function () {
-        $('.alert').css('display','none');
+        $('.alert').css('display', 'none');
         var email = $('.email').val();
         var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
         console.log(email);
         if (email == '') {
             console.log('请输入绑定邮箱账号!');
             $(".errEmailBind").slideDown("slow");
+            $('.errEmailBind').delay(2000).hide(0);
         }
         else if (matchEmail.exec(email)) {
             var email_posting = $.get('/api/email/updateEmail', { email: email }, function (result) {
                 console.log('绑定成功！');
                 $(".bindSuc").slideDown("slow");
+                $('.bindSuc').delay(2000).hide(0);
             });
             initEmail();
             checkBind($('.email'), $('.btn_bind'), $('.btn_modify'));
         }
         else {
             console.log('请输入正确邮箱账号！');
-             $(".errEmail").slideDown("slow");
+            $(".errEmail").slideDown("slow");
+            $('.errEmail').delay(2000).hide(0);
         }
     });
-
-
     /**
      * 用户信息获取
      */
@@ -1131,3 +1140,49 @@ $(function () {
     dashBoard.setOption(optionBoard);
     dataDashBoard.setOption(optionSelect4);
 })
+
+/**
+     * 查找用户
+     */
+
+    function search(evt) {
+        var evt = evt ? evt : (window.event ? window.event : null);//兼容IE和FF
+        if (evt.keyCode == 13) {
+            var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
+            var text = $('.search').val();
+            if (text == "") {
+                return;
+            }
+            else if (matchEmail.exec(text)) {
+                $.ajax({
+                    type: "get",
+                    url: 'api/users/getUserByParam?key=username&value=' + text,
+                    async: false,
+                    success: function (data) {
+                        if (data.code == -200) {
+                            alert("查无此人！");
+                            $('.search').val();
+                            return;
+                        }
+                        alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+                        $('.search').val();
+                    }
+                });
+            } else {
+                $.ajax({
+                    type: "get",
+                    url: 'api/users/getUserByParam?key=id&value=' + text,
+                    async: false,
+                    success: function (data) {
+                        if (data.code == -200) {
+                            alert("查无此人！");
+                            $('.search').val();
+                            return;
+                        }
+                        alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+                        $('.search').val();
+                    }
+                });
+            }
+        }
+    }

@@ -20,7 +20,7 @@
   <link href="src/css/signin.css" rel="stylesheet">
 
   <!-- 引入 echarts.js -->
- 
+
   <script>
     if (sessionStorage.getItem('user') == null) {
       window.location.href = "/signin.html";
@@ -134,11 +134,12 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li class="nav_title one active admin"><a href="#">设置<span class="sr-only">(current)</span></a></li>
-          <li class="nav_title two user"><a href="#">超声波</a></li>
-          <li class="nav_title three"><a href="#">电容式</a></li>
-          <li class="nav_title four"><a href="#">微波雷达</a></li>
-          <li class="nav_title five"><a href="#">静压式</a></li>
+          
+          <li class="nav_title one active  user"><a href="#">超声波</a></li>
+          <li class="nav_title two"><a href="#">电容式</a></li>
+          <li class="nav_title three"><a href="#">微波雷达</a></li>
+          <li class="nav_title four"><a href="#">静压式</a></li>
+          <li class="nav_title five admin" style="display:none"><a href="#">设置<span class="sr-only">(current)</span></a></li>
           <li class="nav_title six">
             <a href="#">修改个人信息</a>
             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
@@ -163,7 +164,7 @@
   <div class="alert alert-success modifySuc" role="alert">
     <strong>恭喜!</strong> 修改成功！
   </div>
-<div class="alert alert-success bindSuc" role="alert">
+  <div class="alert alert-success bindSuc" role="alert">
     <strong>恭喜!</strong> 绑定成功！
   </div>
   <div class="alert alert-danger errmodify" role="alert">
@@ -188,8 +189,237 @@
           </ul>
         </div>
       </div>-->
+
+      <!--版块二-->
+      <div class="col-sm-9 col-md-10  main pageOne  user">
+        <h1 class="page-header">超声波物位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
+            </ul>
+            <div class="time_data_page time_data_pageOne">
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <div class="placeholder chart-data" id='data-line-chart'></div>
+            </div>
+            <div class="alarm_data_page alarm_data_pageOne">
+              <div class="placeholder">
+                <ul class=" navbar-nav time_choose">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <table class="table table-striped table_one">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="right-container">
+            <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
+          </div>
+        </div>
+      </div>
+      <!--版块三-->
+      <div class="col-sm-9  col-md-10  main pageTwo ">
+        <h1 class="page-header">电容式物位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageTwo'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <div class="placeholder chart-data" id='data-bar-chart'></div>
+            </div>
+            <div class="alarm_data_page alarm_data_pageTwo">
+              <div class="placeholder">
+                <ul class=" navbar-nav time_choose">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <table class="table table-striped table_two">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
+        </div>
+      </div>
+      <!--版块四-->
+      <div class="col-sm-9  col-md-10  main pageThree ">
+        <h1 class="page-header">微波雷达物位计</h1>
+        <div class="table-responsive">
+
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageThree'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <div class='placeholder chart-data' id='data-radar-chart'></div>
+            </div>
+            <div class='alarm_data_page alarm_data_pageThree'>
+              <div class="placeholder">
+                <ul class=" navbar-nav time_choose">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <table class="table table-striped table_three">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
+
+        </div>
+      </div>
+      <!--版块五-->
+      <div class="col-sm-9  col-md-10  main pageFour ">
+        <h1 class="page-header">静压式液位计</h1>
+        <div class="table-responsive">
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+            <ul class="nav nav-tabs" role="tablist">
+              <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
+            </ul>
+            <div class='time_data_page time_data_pageFour'>
+              <ul class=" navbar-nav time_choose">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <div class='placeholder chart-data' id='data-dash-board'></div>
+            </div>
+            <div class='alarm_data_page alarm_data_pageFour'>
+              <div class="placeholder">
+                <ul class=" navbar-nav time_choose">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
+                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <table class="table table-striped table_four">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>日期</th>
+                      <th>时间</th>
+                      <th>高度</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                      <td>-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
+        </div>
+      </div>
       <!--版块一-->
-      <div class="col-sm-12  col-md-12 main pageOne admin">
+      <div class="col-sm-12  col-md-12 main pageFive admin">
         <h1 class="page-header">物位计</h1>
         <div class="row placeholders">
           <div class="col-xs-6 col-sm-3 placeholder">
@@ -324,9 +554,9 @@
         </div>
         <div class="handler">
           <h2 class="sub-header">用户花名册</h2>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="查找...">
-          </form><br />
+          <div class="navbar-form navbar-right" onsubmit="">
+            <input type="text" class="form-control search" placeholder="查找..." onkeydown="search(event)">
+          </div><br />
           <div class="row">
             <div class="col-sm-12">
               <ul class="nav nav-pills userNav" role="tablist">
@@ -348,234 +578,6 @@
             </div>
             <!-- /.col-sm-4 -->
           </div>
-        </div>
-      </div>
-      <!--版块二-->
-      <div class="col-sm-9 col-md-10  main pageTwo user">
-        <h1 class="page-header">超声波物位计</h1>
-        <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
-              <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
-            </ul>
-            <div class="time_data_page time_data_pageOne">
-              <ul class=" navbar-nav time_choose">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <div class="placeholder chart-data" id='data-line-chart'></div>
-            </div>
-            <div class="alarm_data_page alarm_data_pageOne">
-              <div class="placeholder">
-                <ul class=" navbar-nav time_choose">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <table class="table table-striped table_one">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>日期</th>
-                      <th>时间</th>
-                      <th>高度</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="right-container">
-            <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
-          </div>
-        </div>
-      </div>
-      <!--版块三-->
-      <div class="col-sm-9  col-md-10  main pageThree">
-        <h1 class="page-header">电容式物位计</h1>
-        <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
-              <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
-            </ul>
-            <div class='time_data_page time_data_pageTwo'>
-              <ul class=" navbar-nav time_choose">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <div class="placeholder chart-data" id='data-bar-chart'></div>
-            </div>
-            <div class="alarm_data_page alarm_data_pageTwo">
-              <div class="placeholder">
-                <ul class=" navbar-nav time_choose">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <table class="table table-striped table_two">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>日期</th>
-                      <th>时间</th>
-                      <th>高度</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
-        </div>
-      </div>
-      <!--版块四-->
-      <div class="col-sm-9  col-md-10  main pageFour">
-        <h1 class="page-header">微波雷达物位计</h1>
-        <div class="table-responsive">
-
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
-              <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
-            </ul>
-            <div class='time_data_page time_data_pageThree'>
-              <ul class=" navbar-nav time_choose">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <div class='placeholder chart-data' id='data-radar-chart'></div>
-            </div>
-            <div class='alarm_data_page alarm_data_pageThree'>
-              <div class="placeholder">
-                <ul class=" navbar-nav time_choose">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <table class="table table-striped table_three">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>日期</th>
-                      <th>时间</th>
-                      <th>高度</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
-
-        </div>
-      </div>
-      <!--版块五-->
-      <div class="col-sm-9  col-md-10  main pageFive">
-        <h1 class="page-header">静压式液位计</h1>
-        <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
-            <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
-              <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
-            </ul>
-            <div class='time_data_page time_data_pageFour'>
-              <ul class=" navbar-nav time_choose">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内 <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                    <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                  </ul>
-                </li>
-              </ul>
-              <div class='placeholder chart-data' id='data-dash-board'></div>
-            </div>
-            <div class='alarm_data_page alarm_data_pageFour'>
-              <div class="placeholder">
-                <ul class=" navbar-nav time_choose">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">5分钟内<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#" class='dropdown-menu-one'>30分钟内</a></li>
-                      <li><a href="#" class='dropdown-menu-two'>1小时内</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <table class="table table-striped table_four">
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>日期</th>
-                      <th>时间</th>
-                      <th>高度</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                      <td>-</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
         </div>
       </div>
     </div>
