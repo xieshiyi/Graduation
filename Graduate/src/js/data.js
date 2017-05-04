@@ -1,5 +1,6 @@
 $(function () {
 
+    window.history.forward(1);
     if (localStorage.getItem('flag') == -1) {
         var admin = document.getElementsByClassName('admin');
         var user = document.getElementsByClassName('user');
@@ -1145,44 +1146,44 @@ $(function () {
      * 查找用户
      */
 
-    function search(evt) {
-        var evt = evt ? evt : (window.event ? window.event : null);//兼容IE和FF
-        if (evt.keyCode == 13) {
-            var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
-            var text = $('.search').val();
-            if (text == "") {
-                return;
-            }
-            else if (matchEmail.exec(text)) {
-                $.ajax({
-                    type: "get",
-                    url: 'api/users/getUserByParam?key=username&value=' + text,
-                    async: false,
-                    success: function (data) {
-                        if (data.code == -200) {
-                            alert("查无此人！");
-                            $('.search').val();
-                            return;
-                        }
-                        alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+function search(evt) {
+    var evt = evt ? evt : (window.event ? window.event : null);//兼容IE和FF
+    if (evt.keyCode == 13) {
+        var matchEmail = /^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i;
+        var text = $('.search').val();
+        if (text == "") {
+            return;
+        }
+        else if (matchEmail.exec(text)) {
+            $.ajax({
+                type: "get",
+                url: 'api/users/getUserByParam?key=username&value=' + text,
+                async: false,
+                success: function (data) {
+                    if (data.code == -200) {
+                        alert("查无此人！");
                         $('.search').val();
+                        return;
                     }
-                });
-            } else {
-                $.ajax({
-                    type: "get",
-                    url: 'api/users/getUserByParam?key=id&value=' + text,
-                    async: false,
-                    success: function (data) {
-                        if (data.code == -200) {
-                            alert("查无此人！");
-                            $('.search').val();
-                            return;
-                        }
-                        alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+                    alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+                    $('.search').val();
+                }
+            });
+        } else {
+            $.ajax({
+                type: "get",
+                url: 'api/users/getUserByParam?key=id&value=' + text,
+                async: false,
+                success: function (data) {
+                    if (data.code == -200) {
+                        alert("查无此人！");
                         $('.search').val();
+                        return;
                     }
-                });
-            }
+                    alert('您查找的用户为ID为：' + data[0].id + "\n邮箱账号为:" + data[0].username);
+                    $('.search').val();
+                }
+            });
         }
     }
+}
