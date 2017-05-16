@@ -112,13 +112,20 @@ body {
   border-radius: 50%;
 }
 .chart{
-  width:500px;
-  height: 500px;
+  width:600px;
+  height: 400px;
+  margin-top: 85px;
 }
 .chart-data{
-  width:400px;
+  width:500px;
   height: 400px;
 }
+/*@media screen and (max-width:720px){
+  .chart{
+    width:310px;
+    height: 400px;*/
+/*}*/
+/*}*/
 /*background*/
 .navbar,.sidebar{
   animation: gradientswitch 50s infinite;
@@ -155,7 +162,7 @@ body {
       }
 }
 /*页面初始化的dislay*/
-.admin{
+.user{
   display: block;
 }
 .pageOne{

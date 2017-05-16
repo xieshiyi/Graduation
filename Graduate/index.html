@@ -135,11 +135,11 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           
-          <li class="nav_title one active  user"><a href="#">超声波</a></li>
+          <li class="nav_title one active  user"><a href="#">超声波<span class="sr-only">(current)</span></a></li>
           <li class="nav_title two"><a href="#">电容式</a></li>
           <li class="nav_title three"><a href="#">微波雷达</a></li>
           <li class="nav_title four"><a href="#">静压式</a></li>
-          <li class="nav_title five admin" style="display:none"><a href="#">设置<span class="sr-only">(current)</span></a></li>
+          <li class="nav_title five admin" style="display:none"><a href="#">设置</a></li>
           <li class="nav_title six">
             <a href="#">修改个人信息</a>
             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
@@ -191,10 +191,10 @@
       </div>-->
 
       <!--版块二-->
-      <div class="col-sm-9 col-md-10  main pageOne  user">
+      <div class="col-sm-12 col-md-12  main pageOne  user">
         <h1 class="page-header">超声波物位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=''>
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
@@ -243,16 +243,16 @@
               </div>
             </div>
           </div>
-          <div class="right-container">
-            <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
+          <div class="right-container col-md-6  col-sm-12 placeholder">
+            <div class="chart" id='line-chart'></div>
           </div>
         </div>
       </div>
       <!--版块三-->
-      <div class="col-sm-9  col-md-10  main pageTwo ">
+      <div class="col-sm-12  col-md-12  main pageTwo ">
         <h1 class="page-header">电容式物位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
@@ -301,15 +301,17 @@
               </div>
             </div>
           </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
+          <div class="right-container col-md-6 col-sm-12 placeholder ">
+          <div class='chart' id='bar-chart'></div>
+          </div>
         </div>
       </div>
       <!--版块四-->
-      <div class="col-sm-9  col-md-10  main pageThree ">
+      <div class="col-sm-12  col-md-12  main pageThree ">
         <h1 class="page-header">微波雷达物位计</h1>
         <div class="table-responsive">
 
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
@@ -358,15 +360,16 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
-
+          <div class="right-container col-md-6 col-sm-12 placeholder">
+          <div class="chart" id='radar-chart'></div>
+          </div>
         </div>
       </div>
       <!--版块五-->
-      <div class="col-sm-9  col-md-10  main pageFour ">
+      <div class="col-sm-12  col-md-12  main pageFour ">
         <h1 class="page-header">静压式液位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
@@ -415,7 +418,9 @@
               </div>
             </div>
           </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
+          <div class="right-container col-md-6 col-sm-12 placeholder">
+            <div class='chart' id='dash-board'></div>
+          </div>
         </div>
       </div>
       <!--版块一-->

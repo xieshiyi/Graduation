@@ -3,11 +3,9 @@ $(function () {
     window.history.forward(1);
     if (localStorage.getItem('flag') == -1) {
         var admin = document.getElementsByClassName('admin');
-        var user = document.getElementsByClassName('user');
-        for (let i = 0; i < admin.length; i++) {
-            admin[i].style.display = "block";
+            admin[0].style.display = "block";
             // user[i].style.display = "none";
-        }
+
         // $('.nav_title').removeClass('active');
         // $('.two').addClass('active');
     }
@@ -46,6 +44,7 @@ $(function () {
             num.addClass('active');
             $('.main').css('display', 'none');
             pageName.css('display', 'block');
+            $('.chart').css('width','500px');
         });
     }
     changePage($('.one'), $('.pageOne'));
@@ -135,6 +134,7 @@ $(function () {
             data1.addClass('active');
             data2.css('display', 'none');
             data3.css('display', 'block');
+            
         });
     }
     //页面一
@@ -1160,7 +1160,7 @@ function search(evt) {
                 url: 'api/users/getUserByParam?key=username&value=' + text,
                 async: false,
                 success: function (data) {
-                    if (data.code == -200) {
+                    if (data.length==0) {
                         alert("查无此人！");
                         $('.search').val();
                         return;

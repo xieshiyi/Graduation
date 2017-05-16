@@ -15,6 +15,7 @@ var pool = mysql.createPool({
 
 // 响应一个JSON数据
 var responseJSON = function (res, ret) {
+  console.log(ret)
   if (typeof ret === 'undefined') {
     res.json({
       code: '-200', msg: '操作失败'
@@ -60,8 +61,11 @@ router.get('/updateEmail', function (req, res, next) {
 router.get('/insertWarning', function (req, res, next) {
   var param = req.query || req.params;
   var time = dateFormat(param.time, 'yyyy-mm-dd HH:MM:ss');
+  console.log(time);
+  console.log(param.repo)
+  console.log(param.height)
   pool.getConnection(function (err, connection) {
-    connection.query('INSERT INTO warning SET ?', { repo: param.repo, time: time, height: param.height }, function (err, result, fields) {
+     connection.query('INSERT INTO warning  SET ?', { repo: param.repo, time: time, height: param.height }, function (err, result, fields) {
       if (result) {
         result = {
           code: 200,
