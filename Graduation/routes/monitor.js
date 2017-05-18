@@ -47,7 +47,7 @@ let transporter = nodemailer.createTransport({
   service: 'QQ',
   auth: {
     user: '465755864@qq.com',
-    pass: 'lyieunqavjnjbjhe' 
+    pass: 'lyieunqavjnjbjhe'
   }
 });
 
@@ -78,8 +78,7 @@ io.on('connection', function (socket) {
  * 插入数据
  */
 router.get('/insert', function (req, res, next) {
-  socket.on('meterCount',function(obj){
-    for (let i = 1; i < obj.count; i++) {
+  for (let i = 1; i < 5; i++) {
     let h = Math.random() * 10;
     influx.writePoints([
       {
@@ -87,12 +86,12 @@ router.get('/insert', function (req, res, next) {
         tags: { number: i },
         fields: { height: h },
       }
-    ]).then(() => {     
+    ]).then(() => {
+      io.emit('monitor', { 'number': i, 'height': h});
       res.send(200);
     });
   }
-  });
-  
+
 });
 /* GET users listing. */
 /**
