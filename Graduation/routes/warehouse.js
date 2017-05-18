@@ -35,18 +35,6 @@ router.get('/', function (req, res, next) {
   });
 });
 /**
- * 查询所有物位计数量
- */
-router.get('/meterCount', function (req, res, next) {
-  var param = req.query || req.params;
-  pool.getConnection(function (err, connection) {
-    connection.query('SELECT COUNT(*) from levelmeter_info', function (err, result, fields) {
-      responseJSON(res, result);
-      connection.release();
-    });
-  });
-});
-/**
  * 查询条件仓库
  */
 router.get('/getWarehouseByParam', function (req, res, next) {

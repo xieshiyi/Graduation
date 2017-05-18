@@ -131,32 +131,31 @@ $(function () {
      * @param {报警详情页面} title 
      */
     //筛选页面点击切换
-    function navChange(data1, data2, data3, data4, title) {
+    function navChange(data1, data2, data3,title) {
         data1.bind('click', function (event) {
             title.removeClass('active');
             data1.addClass('active');
             data2.css('display', 'block');
             data3.css('display', 'none');
-            data4.css('display', 'none');
 
         });
     }
     //页面一
-    navChange($('.real_timeOne'), $('.real_time_pageOne'), $('.time_data_pageOne'), $('.alarm_data_pageOne'), $('.nav_tabs_titleOne'));
-    navChange($('.time_dataOne'), $('.time_data_pageOne'), $('.real_time_pageOne'), $('.alarm_data_pageOne'), $('.nav_tabs_titleOne'));
-    navChange($('.alarm_dataOne'), $('.alarm_data_pageOne'), $('.real_time_pageOne'), $('.time_data_pageOne'), $('.nav_tabs_titleOne'));
+    // navChange($('.real_timeOne'), $('.real_time_pageOne'), $('.time_data_pageOne'), $('.alarm_data_pageOne'), $('.nav_tabs_titleOne'));
+    navChange($('.time_dataOne'), $('.time_data_pageOne'), $('.alarm_data_pageOne'), $('.nav_tabs_titleOne'));
+    navChange($('.alarm_dataOne'), $('.alarm_data_pageOne'), $('.time_data_pageOne'), $('.nav_tabs_titleOne'));
     //页面二   
-    navChange($('.real_timeTwo'), $('.real_time_pageTwo'), $('.time_data_pageTwo'), $('.alarm_data_pageTwo'), $('.nav_tabs_titleTwo'));
-    navChange($('.time_dataTwo'), $('.time_data_pageTwo'), $('.real_time_pageTwo'), $('.alarm_data_pageTwo'), $('.nav_tabs_titleTwo'));
-    navChange($('.alarm_dataTwo'), $('.alarm_data_pageTwo'), $('.real_time_pageTwo'), $('.time_data_pageTwo'), $('.nav_tabs_titleTwo'));
+    // navChange($('.real_timeTwo'), $('.real_time_pageTwo'), $('.time_data_pageTwo'), $('.alarm_data_pageTwo'), $('.nav_tabs_titleTwo'));
+    navChange($('.time_dataTwo'), $('.time_data_pageTwo'), $('.alarm_data_pageTwo'), $('.nav_tabs_titleTwo'));
+    navChange($('.alarm_dataTwo'), $('.alarm_data_pageTwo'), $('.time_data_pageTwo'), $('.nav_tabs_titleTwo'));
     //页面三
-    navChange($('.real_timeThree'), $('.real_time_pageThree'), $('.time_data_pageThree'), $('.alarm_data_pageThree'), $('.nav_tabs_titleThree'));
-    navChange($('.time_dataThree'), $('.time_data_pageThree'), $('.real_time_pageThree'), $('.alarm_data_pageThree'), $('.nav_tabs_titleThree'));
-    navChange($('.alarm_dataThree'), $('.alarm_data_pageThree'), $('.real_time_pageThree'), $('.time_data_pageThree'), $('.nav_tabs_titleThree'));
-    //页面四
-    navChange($('.real_timeFour'), $('.real_time_pageFour'), $('.time_data_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
-    navChange($('.time_dataFour'), $('.time_data_pageFour'), $('.real_time_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
-    navChange($('.alarm_dataFour'), $('.alarm_data_pageFour'), $('.real_time_pageFour'), $('.time_data_pageFour'), $('.nav_tabs_titleFour'));
+    // navChange($('.real_timeThree'), $('.real_time_pageThree'), $('.time_data_pageThree'), $('.alarm_data_pageThree'), $('.nav_tabs_titleThree'));
+    navChange($('.time_dataThree'), $('.time_data_pageThree'), $('.alarm_data_pageThree'), $('.nav_tabs_titleThree'));
+    navChange($('.alarm_dataThree'), $('.alarm_data_pageThree'), $('.time_data_pageThree'), $('.nav_tabs_titleThree'));
+    // //页面四
+    // navChange($('.real_timeFour'), $('.real_time_pageFour'), $('.time_data_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
+    navChange($('.time_dataFour'), $('.time_data_pageFour'), $('.alarm_data_pageFour'), $('.nav_tabs_titleFour'));
+    navChange($('.alarm_dataFour'), $('.alarm_data_pageFour'), $('.time_data_pageFour'), $('.nav_tabs_titleFour'));
 
     /**
      * 管理员界面
@@ -434,18 +433,6 @@ $(function () {
         /** 监听后台数据变化
          * 各个仓库变化，传送变化的数据，进行处理后展示到前端
         */
-        /**获取物位计数量，传给服务端 进行数据插入 */
-        $.get('/api/wherehouse/meterCount', function (responseTxt, statusTxt, xhr) {
-            if (statusTxt == "success") {
-                var count = responseTxt;
-                console.log(count);
-                socket.emit('meterCount', { 'count': count });
-            }
-            if (statusTxt == "error")
-                console.log("Error: " + xhr.status + ": " + xhr.statusText);
-        });
-    });
-
     if (obj.number == '1') {
         $.get('/api/monitor/repo?repo=1&number=1', function (responseTxt, statusTxt, xhr) {
             if (statusTxt == "success") {
@@ -1161,7 +1148,7 @@ radarChart.setOption(optionRadar);
 dataRadarChart.setOption(optionSelect3);
 dashBoard.setOption(optionBoard);
 dataDashBoard.setOption(optionSelect4);
-
+});
 /**
      * 查找用户
      */
