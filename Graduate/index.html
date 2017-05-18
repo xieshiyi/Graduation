@@ -134,12 +134,12 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          
-          <li class="nav_title one active  user"><a href="#">超声波</a></li>
-          <li class="nav_title two"><a href="#">电容式</a></li>
-          <li class="nav_title three"><a href="#">微波雷达</a></li>
-          <li class="nav_title four"><a href="#">静压式</a></li>
-          <li class="nav_title five admin" style="display:none"><a href="#">设置<span class="sr-only">(current)</span></a></li>
+
+          <li class="nav_title one active  user"><a href="#">仓库1<span class="sr-only">(current)</span></a></li>
+          <li class="nav_title two"><a href="#">仓库2</a></li>
+          <li class="nav_title three"><a href="#">仓库3</a></li>
+          <li class="nav_title four"><a href="#">仓库4</a></li>
+          <li class="nav_title five admin" style="display:none"><a href="#">设置</a></li>
           <li class="nav_title six">
             <a href="#">修改个人信息</a>
             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
@@ -191,14 +191,49 @@
       </div>-->
 
       <!--版块二-->
-      <div class="col-sm-9 col-md-10  main pageOne  user">
+      <div class="col-sm-12 col-md-12  main pageOne  user">
         <h1 class="page-header">超声波物位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=''>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=''>
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleOne time_dataOne active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class="nav_tabs_titleOne real_timeOne active"><a href="#">实时监控</a></li>
+              <li role="presentation" class="nav_tabs_titleOne time_dataOne"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleOne alarm_dataOne'><a href="#">报警详情</a></li>
             </ul>
+            <div class="real_time_page real_time_pageOne">            
+                <table class="table table-striped table_realtime">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <a>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    </a>
+                    <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
             <div class="time_data_page time_data_pageOne">
               <ul class=" navbar-nav time_choose">
                 <li class="dropdown">
@@ -243,20 +278,53 @@
               </div>
             </div>
           </div>
-          <div class="right-container">
-            <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='line-chart'></div>
+          <div class="right-container col-md-6  col-sm-12 placeholder">
+            <div class="chart" id='line-chart'></div>
           </div>
         </div>
       </div>
       <!--版块三-->
-      <div class="col-sm-9  col-md-10  main pageTwo ">
+      <div class="col-sm-12  col-md-12  main pageTwo ">
         <h1 class="page-header">电容式物位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleTwo time_dataTwo active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class="nav_tabs_titleTwo real_timeTwo active"><a href="#">实时监控</a></li>
+              <li role="presentation" class="nav_tabs_titleTwo time_dataTwo"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleTwo alarm_dataTwo'><a href="#">报警详情</a></li>
             </ul>
+            <div class="real_time_page real_time_pageTwo">            
+                <table class="table table-striped table_realtime">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
             <div class='time_data_page time_data_pageTwo'>
               <ul class=" navbar-nav time_choose">
                 <li class="dropdown">
@@ -301,19 +369,54 @@
               </div>
             </div>
           </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='bar-chart'></div>
+          <div class="right-container col-md-6 col-sm-12 placeholder ">
+            <div class='chart' id='bar-chart'></div>
+          </div>
         </div>
       </div>
       <!--版块四-->
-      <div class="col-sm-9  col-md-10  main pageThree ">
+      <div class="col-sm-12  col-md-12  main pageThree ">
         <h1 class="page-header">微波雷达物位计</h1>
         <div class="table-responsive">
 
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleThree time_dataThree active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class="nav_tabs_titleThree real_timeThree active"><a href="#">实时监控</a></li>
+              <li role="presentation" class="nav_tabs_titleThree time_dataThree"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleThree alarm_dataThree'><a href="#">报警详情</a></li>
             </ul>
+            <div class="real_time_page real_time_pageThree">            
+                <table class="table table-striped table_realtime">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
             <div class='time_data_page time_data_pageThree'>
               <ul class=" navbar-nav time_choose">
                 <li class="dropdown">
@@ -358,19 +461,53 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id='radar-chart'></div>
-
+          <div class="right-container col-md-6 col-sm-12 placeholder">
+            <div class="chart" id='radar-chart'></div>
+          </div>
         </div>
       </div>
       <!--版块五-->
-      <div class="col-sm-9  col-md-10  main pageFour ">
+      <div class="col-sm-12  col-md-12  main pageFour ">
         <h1 class="page-header">静压式液位计</h1>
         <div class="table-responsive">
-          <div class="col-md-6 col-xs-12 col-sm-12 placeholder chart" id=' '>
+          <div class="col-md-6 col-xs-12 col-sm-12 placeholder " id=' '>
             <ul class="nav nav-tabs" role="tablist">
-              <li role="presentation" class="nav_tabs_titleFour time_dataFour active"><a href="#">时间段监控</a></li>
+              <li role="presentation" class="nav_tabs_titleFour real_timeFour active"><a href="#">实时监控</a></li>
+              <li role="presentation" class="nav_tabs_titleFour time_dataFour"><a href="#">时间段监控</a></li>
               <li role="presentation" class='nav_tabs_titleFour alarm_dataFour'><a href="#">报警详情</a></li>
             </ul>
+            <div class="real_time_page real_time_pageFour">            
+                <table class="table table-striped table_realtime">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <td>2</td>
+                      <td>Jacob</td>
+                      <td>Thornton</td>
+                      <td>@fat</td>
+                    </tr>
+                    <tr>
+                      <td>3</td>
+                      <td>Larry</td>
+                      <td>the Bird</td>
+                      <td>@twitter</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
             <div class='time_data_page time_data_pageFour'>
               <ul class=" navbar-nav time_choose">
                 <li class="dropdown">
@@ -415,7 +552,9 @@
               </div>
             </div>
           </div>
-          <div class='col-md-6 col-xs-12 col-sm-12 placeholder chart' id='dash-board'></div>
+          <div class="right-container col-md-6 col-sm-12 placeholder">
+            <div class='chart' id='dash-board'></div>
+          </div>
         </div>
       </div>
       <!--版块一-->
@@ -553,31 +692,87 @@
           </div>
         </div>
         <div class="handler">
-          <h2 class="sub-header">用户花名册</h2>
-          <div class="navbar-form navbar-right" onsubmit="">
-            <input type="text" class="form-control search" placeholder="查找..." onkeydown="search(event)">
-          </div><br />
+          <h2 class="sub-header">物位计名录</h2>
           <div class="row">
-            <div class="col-sm-12">
-              <ul class="nav nav-pills userNav" role="tablist">
-                <li role="presentation" class="userNav all_userNav active"><a>全部 <span class="badge all">0</span></a></li>
-                <li role="presentation" class="userNav already_userNav"><a>已审核 <span class="badge already">0</span></a></li>
-                <li role="presentation" class="userNav never_userNav"><a>未审核 <span class="badge never">0</span></a></li>
-              </ul>
-
-              <div class="list-group">
-                <a class="list-group-item ">
-                  <h4 class="list-group-item-heading">ID</h4>
-                  <span class="list-group-item-text">用户邮箱</span>
-                  <div class="btn_user">
-                    <button type="" class="btn btn-primary  btn_check">审核</button>
-                    <button type="" class="btn btn-primary  btn_delete">删除</button>
+            <div class="col-md-6">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <div class="panel panel-success">
+                <div class="panel-heading">
+                  <h3 class="panel-title">物位计添加</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="col-md-6">
+                    <h5 style="float: left;">所属仓库</h5>
+                    <input type="number" class="form-control input_repo3 height_repo3" placeholder="仓库高度" disabled="disabled">
                   </div>
-                </a>
+                  <div class="col-md-6">
+                    <h5 style="float: left;">物位计类型</h5>
+                    <input type="number" class="form-control input_repo3 d_repo3" placeholder="仓库直径" disabled="disabled">
+                  </div>
+                  <button type="submit" class="btn btn-success  btnRepo_modify btnRepo_modify3">添加</button>
+                </div>
               </div>
             </div>
-            <!-- /.col-sm-4 -->
           </div>
+          <div class="handler">
+            <h2 class="sub-header">用户花名册</h2>
+            <div class="navbar-form navbar-right" onsubmit="">
+              <input type="text" class="form-control search" placeholder="查找..." onkeydown="search(event)">
+            </div><br />
+            <div class="row">
+              <div class="col-sm-12">
+                <ul class="nav nav-pills userNav" role="tablist">
+                  <li role="presentation" class="userNav all_userNav active"><a>全部 <span class="badge all">0</span></a></li>
+                  <li role="presentation" class="userNav already_userNav"><a>已审核 <span class="badge already">0</span></a></li>
+                  <li role="presentation" class="userNav never_userNav"><a>未审核 <span class="badge never">0</span></a></li>
+                </ul>
+
+                <div class="list-group">
+                  <a class="list-group-item ">
+                    <h4 class="list-group-item-heading">ID</h4>
+                    <span class="list-group-item-text">用户邮箱</span>
+                    <div class="btn_user">
+                      <button type="" class="btn btn-primary  btn_check">审核</button>
+                      <button type="" class="btn btn-primary  btn_delete">删除</button>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <!-- /.col-sm-4 -->
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
