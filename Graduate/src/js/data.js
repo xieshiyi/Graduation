@@ -14,11 +14,6 @@ $(function () {
      * socket:websocket对象，与和服务端进行通信
      */
     var socket = io('http://monitor.io:8080/');
-
-    /**对物位计监控的表格进行监听 */
-    $(".table_realtime tr").click(function () {
-        $(this).addClass("on").siblings("tr").removeClass("on");
-    });
     /**
      * 对Date的扩展，将 Date 转化为指定格式的String
      * 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 

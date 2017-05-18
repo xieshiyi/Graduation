@@ -196,17 +196,13 @@ body {
 .nav-tabs>li>a:focus{
   background-color:#fff!important;
 }
-.real_time_page,.alarm_data_page,.time_data_page{ 
+.alarm_data_page,.time_data_page{ 
     width: 100%;
     height: 90%;
     background: #fbf8f8;
 }
-.real_time_page{ 
+.time_data_page{ 
   display: block;
-  overflow-y: scroll;
-}
-.time_data_page{
-  display: none;
 }
 .alarm_data_page{
   display: none;
