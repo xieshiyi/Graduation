@@ -12,7 +12,6 @@ $(function () {
         // $('.two').addClass('active');
     }
     var userAccount = sessionStorage.getItem('user');
-
     /**
      * socket:websocket对象，与和服务端进行通信
      */
