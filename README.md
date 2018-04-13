@@ -44,7 +44,7 @@
 │   └── signin.html           // 登录、注册页面
 ├── Graduation                // 服务端
 │   ├── bin                 
-│   ├── public                //资源
+│   ├── public                // 资源
 │   ├── routes                // 路由
 │   ├── views                 // 这里其实用不到，如果不实现前后端分离，就用渲染这里的页面
 │   ├── app.js                // 入口文件
