@@ -29,3 +29,27 @@
 ## 数据库
     1. Mysql：保存常用固定信息
     2. influxdb：保存实时数据
+
+
+### 目录结构 ###
+***
+<pre>
+├── Graduate                  // 前端项目
+│   ├── image                 // 图片
+│   ├── src                   
+│   │   ├── css               // 样式文件
+│   │   ├── js                // js脚本文件
+│   │   └── node.js           // node配置
+│   ├── index.html            // 主页面
+│   └── signin.html           // 登录、注册页面
+├── Graduation                // 服务端
+│   ├── bin                 
+│   ├── public                //资源
+│   ├── routes                // 路由
+│   ├── views                 // 这里其实用不到，如果不实现前后端分离，就用渲染这里的页面
+│   ├── app.js                // 入口文件
+│   ├── influxdb.js           // influxdb操作   
+│   ├── mysql.js              // mysql数据库操作
+│   └── package.json          // 项目配置文件                
+
+</pre>
